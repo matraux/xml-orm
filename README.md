@@ -23,6 +23,7 @@ Useful for parsing configuration files, processing structured XML APIs, and work
 - Conversion from XML to typed entities and back
 - Lazy-loading collections for efficient memory usage
 - Entity objects are mutable and can be freely modified after creation
+- Mapping via PHP attributes (no separate config files needed)
 - Strict type support with automatic casting
 - Native support for nested structures and arrays
 - Full support for XML namespaces
@@ -42,7 +43,8 @@ composer require matraux/xml-orm
 |----|---|---
 | 1.0.1 | 8.2+ | Initial commit
 | 1.4.1 | 8.3+ | Parsing via PHP attributes
-| 1.5.0 | 8.4+ | Performance optimization
+| 1.5.0 | 8.4+ | Performance optimization, metadata caching
+| 1.6.0 | 8.4+ | Enum support, security hardening, doc fixes
 
 <br>
 
@@ -54,7 +56,7 @@ See [Read](./docs/Read.md) for full reading examples.
 use Matraux\XmlORM\Xml\SimpleXmlExplorer;
 
 $explorer = SimpleXmlExplorer::fromString($xml);
-$main = MainEntity::create($explorer);
+$main = MainEntity::fromExplorer($explorer);
 echo $main->name;
 ```
 

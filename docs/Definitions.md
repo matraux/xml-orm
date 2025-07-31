@@ -39,6 +39,8 @@ final class ItemEntity extends Entity
 	#[XmlElement('ID')] // search XML element with different name "ID"
 	public int $id;
 
+	public string $name; // search XML element with different name "name"
+
 	#[XmlAttribute('ATTR')] // search XML element attribute with name "ATTR"
 	public string $attr;
 

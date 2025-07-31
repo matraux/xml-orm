@@ -12,11 +12,11 @@
 		<gen:ITEM_ID>1</gen:ITEM_ID>
 		<gen:ITEM_NAME>First item entity</gen:ITEM_NAME>
 	</gen:ITEM>
-	<gen:ITEM ATTR="Second attribute">>
+	<gen:ITEM ATTR="Second attribute">
 		<gen:ITEM_ID>2</gen:ITEM_ID>
 		<gen:ITEM_NAME>Second item entity</gen:ITEM_NAME>
 	</gen:ITEM>
-	<gen:ITEM ATTR="Third attribute">>
+	<gen:ITEM ATTR="Third attribute">
 		<gen:ITEM_ID>3</gen:ITEM_ID>
 		<gen:ITEM_NAME>Third item entity</gen:ITEM_NAME>
 	</gen:ITEM>
@@ -28,7 +28,7 @@
 use Matraux\XmlORM\Xml\SimpleXmlExplorer;
 
 $explorer = SimpleXmlExplorer::fromString($xml);
-$main = MainEntity::create($explorer); // Tell reader where to start --> $reader->withIndex('gen:main')
+$main = MainEntity::fromExplorer($explorer); // Tell explorer where to start --> $explorer->withIndex('main', new GeneralXmlNamespace())
 
 echo $main->id; // (int) 1000
 echo $main->name; // (string) Maim entity
