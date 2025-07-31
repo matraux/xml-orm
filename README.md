@@ -42,7 +42,7 @@ composer require matraux/xml-orm
 |----|---|---
 | 1.0.1 | 8.2+ | Initial commit
 | 1.4.1 | 8.3+ | Parsing via PHP attributes
-| 2.0.0 | 8.4+ | Performance optimization
+| 1.5.0 | 8.4+ | Performance optimization
 
 <br>
 
