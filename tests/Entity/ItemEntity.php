@@ -4,6 +4,7 @@ namespace Matraux\XmlORMTest\Entity;
 
 use Matraux\XmlORM\Entity\Entity;
 use Matraux\XmlORM\Xml\XmlElement;
+use Matraux\XmlORMTest\Enum\Active;
 use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
 
 #[GeneralXmlNamespace]
@@ -21,7 +22,7 @@ final class ItemEntity extends Entity
 
 	#[GeneralXmlNamespace]
 	#[XmlElement('Active')]
-	public string $active;
+	public Active $active;
 
 	#[GeneralXmlNamespace]
 	#[XmlElement('md5')]

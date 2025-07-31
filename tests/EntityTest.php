@@ -7,6 +7,7 @@ use Matraux\XmlORMTest\Collection\ItemCollection;
 use Matraux\XmlORMTest\Entity\DataEntity;
 use Matraux\XmlORMTest\Entity\MainEntity;
 use Matraux\XmlORMTest\Entity\ResponseEntity;
+use Matraux\XmlORMTest\Enum\Active;
 use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
 use Tester\Assert;
 use Tester\TestCase;
@@ -44,6 +45,8 @@ final class EntityTest extends TestCase
 
 		Assert::type(MainEntity::class, $entity->main);
 		Assert::type(ItemCollection::class, $entity->main->items);
+		Assert::type(Active::False, $entity->main->items[0]->active);
+		Assert::type(Active::True, $entity->main->items[2]->active);
 		Assert::equal('Some custom name', $entity->main->name);
 		Assert::equal('Some custom surname', $entity->main->surname);
 		Assert::equal('Custom note', $entity->main->note);
