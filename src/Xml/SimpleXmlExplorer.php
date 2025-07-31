@@ -3,6 +3,7 @@
 namespace Matraux\XmlORM\Xml;
 
 use Matraux\XmlORM\Exception\XmlParsingException;
+use OutOfRangeException;
 use SimpleXMLElement;
 use Traversable;
 use UnexpectedValueException;
@@ -59,7 +60,7 @@ final class SimpleXmlExplorer extends XmlExplorer
 	public function offsetGet(mixed $offset): static
 	{
 		if (!isset($this->xml[$offset])) {
-			throw new XmlParsingException(sprintf('Element with index %u not found.', $offset));
+			throw new OutOfRangeException(sprintf('Element with index %u not found.', $offset));
 		}
 
 		return new static($this->xml[$offset]);
