@@ -5,11 +5,9 @@ namespace Matraux\XmlORM\Entity;
 use DOMDocument;
 use DOMNode;
 use Matraux\XmlORM\Collection\Collection;
+use Matraux\XmlORM\Metadata\EntityMetadataFactory;
 use Matraux\XmlORM\Metadata\PropertyMetadataFactory;
 use Matraux\XmlORM\Xml\XmlExplorer;
-use Matraux\XmlORM\Xml\XmlNamespace;
-use ReflectionAttribute;
-use ReflectionClass;
 use ReflectionProperty;
 use RuntimeException;
 use Stringable;
@@ -79,6 +77,8 @@ abstract class Entity implements Stringable
 	 */
 	public function asXml(?DOMNode $document = null): string
 	{
+		$entityMetadata = EntityMetadataFactory::create(static::class);
+
 		// phpcs:ignore
 		$document ??= new DOMDocument('1.0', static::Encoding);
 
@@ -87,12 +87,13 @@ abstract class Entity implements Stringable
 			throw new RuntimeException('Invalid DOM document owner.');
 		}
 
-		$element = $owner->createElement((string) $this);
+		$xmlns = $entityMetadata->namespace;
+		$name = $xmlns ? $xmlns::getName() . ':' . $entityMetadata->name : $entityMetadata->name;
+
+		$element = $owner->createElement($name);
 		$document->appendChild($element);
 
-		$reflection = new ReflectionClass(static::class);
-		$attributes = $reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
-		if ($xmlns = array_shift($attributes)?->newInstance()) {
+		if($xmlns) {
 			if (!$owner->documentElement) {
 				throw new RuntimeException('Invalid DOM document element.');
 			}
@@ -129,11 +130,7 @@ abstract class Entity implements Stringable
 					$owner->documentElement?->setAttribute('xmlns:' . $xmlns::getName(), $xmlns::getSource());
 				}
 
-				if (is_bool($value)) {
-					$elementProperty = $owner->createElement($name, $value ? 'true' : 'false');
-				} else {
-					$elementProperty = $owner->createElement($name, (string) $value);
-				}
+				$elementProperty = $owner->createElement($name, (string) $value);
 
 				if ($value !== null) {
 					$element->appendChild($elementProperty);
