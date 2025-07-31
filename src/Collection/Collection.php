@@ -22,7 +22,7 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
 
 	/** @var array<int,TEntity> */
-	final protected array $entities;
+	final protected array $entities = [];
 
 	/** @var int<0,max> */
 	final protected int $countCache;
