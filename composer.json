@@ -1,0 +1,56 @@
+{
+	"name": "matraux/xml-orm",
+	"description": "A PHP 8.4+ library for converting XML data to typed entities and back, with support for lazy-loading collections and XML namespaces.",
+	"keywords": ["XML ORM", "xml-orm", "MATRAUX"],
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Daniel Žůrek",
+			"email": "info@danielzurek.cz",
+			"homepage": "https://www.matraux.com"
+		}
+	],
+	"require": {
+		"php": "^8.4",
+		"nette/utils": "*"
+	},
+	"require-dev": {
+		"nette/tester": "^2.5",
+		"phpstan/phpstan": "^2.1",
+		"tracy/tracy": "^2.10",
+		"contributte/qa": "^0.3.2",
+		"nette/neon": "^3.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Matraux\\XmlORM\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Matraux\\XmlORMTest\\": "tests"
+		}
+	},
+	"support": {
+		"issues": "https://github.com/matraux/xml-orm/issues",
+		"source": "https://github.com/matraux/xml-orm"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"codesniffer": "\"vendor/bin/phpcs\" --standard=\"ruleset.xml\"",
+		"codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\"",
+		"stan": "vendor/bin/phpstan analyse --configuration \"phpstan.neon\" --ansi",
+		"test": "vendor/bin/tester -s -p php --colors 1 -C tests/"
+	},
+	"scripts-descriptions": {
+		"codesniffer": "Run PHP Codesniffer. Usage: \"composer codesniffer {path to folder or file}\"",
+		"codefixer": "Run PHP Codefixer. Usage: \"composer codefixer {path to folder or file}\"",
+		"stan": "Run PHP Stan. Usage \"composer stan {path to folder or file}\"",
+		"test": "Run PHP application tests"
+	}
+}
