@@ -2,20 +2,14 @@
 
 namespace Matraux\XmlORMTest;
 
-use Tester\Assert;
-use LogicException;
 use Matraux\XmlORM\Exception\XmlParsingException;
-use Tester\TestCase;
-use SimpleXMLElement;
-use OutOfRangeException;
-use Nette\Utils\FileSystem;
-use UnexpectedValueException;
-use Matraux\XmlORM\Xml\XmlExplorer;
 use Matraux\XmlORM\Xml\SimpleXmlExplorer;
-use Matraux\XmlORMTest\Entity\ItemEntity;
-use Matraux\XmlORMTest\Entity\ResponseEntity;
 use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
-use Matraux\XmlORMTest\Collection\ItemCollection;
+use Nette\Utils\FileSystem;
+use OutOfRangeException;
+use Tester\Assert;
+use Tester\TestCase;
+use UnexpectedValueException;
 
 require_once __DIR__ . '/Bootstrap.php';
 
@@ -31,7 +25,7 @@ final class XmlExplorerTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		Assert::noError(function():void{
+		Assert::noError(function (): void {
 			SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml');
 		});
 	}
@@ -52,7 +46,7 @@ final class XmlExplorerTest extends TestCase
 
 		$xmlNamespace = new GeneralXmlNamespace();
 		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml');
-		Assert::exception(function()use($explorer, $xmlNamespace): void {
+		Assert::exception(function () use ($explorer, $xmlNamespace): void {
 			$explorer->withIndex('notExists', $xmlNamespace);
 		}, XmlParsingException::class);
 
@@ -98,18 +92,18 @@ final class XmlExplorerTest extends TestCase
 			->withIndex('main', $xmlNamespace)
 			->withIndex('item', $xmlNamespace);
 
-		Assert::exception(function()use($explorer): void {
-			isset($explorer['test']);
+		Assert::exception(function () use ($explorer): void {
+			$value = isset($explorer['test']);
 		}, UnexpectedValueException::class);
 
-		Assert::exception(function()use($explorer): void {
-			isset($explorer[-1]);
+		Assert::exception(function () use ($explorer): void {
+			$value = isset($explorer[-1]);
 		}, UnexpectedValueException::class);
 
 		Assert::equal(true, isset($explorer[0]));
 
-		Assert::exception(function()use($explorer): void {
-			$explorer[20000];
+		Assert::exception(function () use ($explorer): void {
+			$value = $explorer[20000];
 		}, OutOfRangeException::class);
 
 		Assert::type(SimpleXmlExplorer::class, $explorer[0]);

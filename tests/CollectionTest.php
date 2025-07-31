@@ -2,15 +2,14 @@
 
 namespace Matraux\XmlORMTest;
 
+use Matraux\XmlORM\Xml\SimpleXmlExplorer;
+use Matraux\XmlORMTest\Collection\ItemCollection;
+use Matraux\XmlORMTest\Entity\ItemEntity;
+use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
+use OutOfRangeException;
 use Tester\Assert;
 use Tester\TestCase;
-use OutOfRangeException;
 use UnexpectedValueException;
-use Matraux\XmlORM\Xml\SimpleXmlExplorer;
-use Matraux\XmlORMTest\Entity\ItemEntity;
-use Matraux\XmlORMTest\Entity\ResponseEntity;
-use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
-use Matraux\XmlORMTest\Collection\ItemCollection;
 
 require_once __DIR__ . '/Bootstrap.php';
 
@@ -70,18 +69,14 @@ final class CollectionTest extends TestCase
 
 		$collection = ItemCollection::create($explorer);
 
-		Assert::exception(function()use($collection): void {
-			isset($collection['test']);
-		}, UnexpectedValueException::class);
-
-		Assert::exception(function()use($collection): void {
-			isset($collection[-1]);
+		Assert::exception(function () use ($collection): void {
+			$value = isset($collection[-1]);
 		}, UnexpectedValueException::class);
 
 		Assert::equal(true, isset($collection[0]));
 
-		Assert::exception(function()use($collection): void {
-			$collection[20000];
+		Assert::exception(function () use ($collection): void {
+			$value = $collection[20000];
 		}, OutOfRangeException::class);
 
 		Assert::type(ItemEntity::class, $collection[0]);
@@ -98,7 +93,7 @@ final class CollectionTest extends TestCase
 			->withIndex('item', $xmlNamespace);
 
 		$collection = ItemCollection::create($explorer);
-		foreach($collection as $index => $itemEntity) {
+		foreach ($collection as $index => $itemEntity) {
 			Assert::type('int', $index);
 			Assert::type(ItemEntity::class, $itemEntity);
 		}

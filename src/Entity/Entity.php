@@ -93,7 +93,7 @@ abstract class Entity implements Stringable
 		$element = $owner->createElement($name);
 		$document->appendChild($element);
 
-		if($xmlns) {
+		if ($xmlns) {
 			if (!$owner->documentElement) {
 				throw new RuntimeException('Invalid DOM document element.');
 			}

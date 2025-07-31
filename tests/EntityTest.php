@@ -2,14 +2,14 @@
 
 namespace Matraux\XmlORMTest;
 
-use Tester\Assert;
-use Tester\TestCase;
 use Matraux\XmlORM\Xml\SimpleXmlExplorer;
+use Matraux\XmlORMTest\Collection\ItemCollection;
 use Matraux\XmlORMTest\Entity\DataEntity;
 use Matraux\XmlORMTest\Entity\MainEntity;
 use Matraux\XmlORMTest\Entity\ResponseEntity;
 use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
-use Matraux\XmlORMTest\Collection\ItemCollection;
+use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/Bootstrap.php';
 

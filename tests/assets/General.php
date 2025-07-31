@@ -12,17 +12,18 @@ $data .= '
 			<gen:customName>Some custom name</gen:customName>
 			<gen:customSurname>Some custom surname</gen:customSurname>
 ';
-for($n=1; $n<=20000; $n++) {
+for ($n = 1; $n <= 20000; $n++) {
 	$data .= '
 			<gen:item>
 				<gen:ID>' . $n . '</gen:ID>
 				<gen:Name>' . $n . '. name</gen:Name>
-				<gen:Active>' . ($n%3===0 ? 'true' : 'false') . '</gen:Active>
+				<gen:Active>' . ($n % 3 === 0 ? 'true' : 'false') . '</gen:Active>
 				<gen:md5>' . md5((string) $n) . '</gen:md5> <!-- md5 od ID -->
 				<gen:hash>' . base64_encode(md5((string) $n)) . '</gen:hash> <!-- base64 encoded md5 -->
 			</gen:item>
 	';
 }
+
 $data .= '
 		</gen:main>
 	</gen:data>

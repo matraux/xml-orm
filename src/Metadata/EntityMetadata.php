@@ -2,10 +2,11 @@
 
 namespace Matraux\XmlORM\Metadata;
 
-use ReflectionClass;
-use ReflectionAttribute;
+use Matraux\XmlORM\Entity\Entity;
 use Matraux\XmlORM\Xml\XmlElement;
 use Matraux\XmlORM\Xml\XmlNamespace;
+use ReflectionAttribute;
+use ReflectionClass;
 
 final readonly class EntityMetadata
 {
@@ -14,8 +15,9 @@ final readonly class EntityMetadata
 
 	public ?XmlNamespace $namespace;
 
-	public string $fullName;
-
+	/**
+	 * @param ReflectionClass<Entity> $reflection
+	 */
 	protected function __construct(protected ReflectionClass $reflection)
 	{
 		$attributes = $this->reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -25,6 +27,9 @@ final readonly class EntityMetadata
 		$this->namespace = array_shift($attributes)?->newInstance();
 	}
 
+	/**
+	 * @param ReflectionClass<Entity> $reflection
+	 */
 	public static function create(ReflectionClass $reflection): static
 	{
 		return new static($reflection);
