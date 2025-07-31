@@ -2,8 +2,8 @@
 
 namespace Matraux\XmlORM\Metadata;
 
-use ReflectionClass;
 use Matraux\XmlORM\Entity\Entity;
+use ReflectionClass;
 
 final class PropertyMetadataFactory
 {

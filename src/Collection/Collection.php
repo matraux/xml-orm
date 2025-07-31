@@ -2,16 +2,16 @@
 
 namespace Matraux\XmlORM\Collection;
 
-use Countable;
 use ArrayAccess;
-use Traversable;
-use RuntimeException;
+use Countable;
 use IteratorAggregate;
-use OutOfRangeException;
-use UnexpectedValueException;
 use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Xml\XmlExplorer;
 use Matraux\XmlORM\Exception\ReadonlyAccessException;
+use Matraux\XmlORM\Xml\XmlExplorer;
+use OutOfRangeException;
+use RuntimeException;
+use Traversable;
+use UnexpectedValueException;
 
 /**
  * @template TEntity of Entity
@@ -29,44 +29,12 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 
 	final protected function __construct(protected ?XmlExplorer $explorer = null)
 	{
-
 	}
 
 	final public static function create(?XmlExplorer $explorer = null): static
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);
-	}
-
-	/**
-	 * @return class-string<TEntity>
-	 */
-	abstract protected static function getEntityClass(): string;
-
-	/**
-	 * @return Traversable<int,TEntity>
-	 */
-	public function getIterator(): Traversable
-	{
-		if ($this->explorer) {
-			foreach ($this->explorer as $index => $data) {
-				yield (int) $index => static::getEntityClass()::fromExplorer($data);
-			}
-		} else {
-			foreach ($this->entities as $index => $entity) {
-				yield $index => $entity;
-			}
-		}
-	}
-
-	/**
-	 * @return TEntity
-	 */
-	public function createEntity(): Entity
-	{
-		unset($this->countCache);
-
-		return $this->entities[] = static::getEntityClass()::create();
 	}
 
 	/**
@@ -130,6 +98,37 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 		unset($this->countCache);
 		unset($this->entities[$offset]);
 	}
+
+	/**
+	 * @return Traversable<int,TEntity>
+	 */
+	public function getIterator(): Traversable
+	{
+		if ($this->explorer) {
+			foreach ($this->explorer as $index => $data) {
+				yield (int) $index => static::getEntityClass()::fromExplorer($data);
+			}
+		} else {
+			foreach ($this->entities as $index => $entity) {
+				yield $index => $entity;
+			}
+		}
+	}
+
+	/**
+	 * @return TEntity
+	 */
+	public function createEntity(): Entity
+	{
+		unset($this->countCache);
+
+		return $this->entities[] = static::getEntityClass()::create();
+	}
+
+	/**
+	 * @return class-string<TEntity>
+	 */
+	abstract protected static function getEntityClass(): string;
 
 	final protected function assertWritable(): void
 	{

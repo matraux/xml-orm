@@ -2,18 +2,18 @@
 
 namespace Matraux\XmlORM\Entity;
 
-use DOMNode;
-use Throwable;
-use Stringable;
 use DOMDocument;
-use RuntimeException;
-use ReflectionProperty;
-use ReflectionAttribute;
-use Matraux\XmlORM\Xml\XmlNamespace;
-use Matraux\XmlORM\Xml\XmlExplorer;
+use DOMNode;
 use Matraux\XmlORM\Collection\Collection;
 use Matraux\XmlORM\Metadata\PropertyMetadataFactory;
+use Matraux\XmlORM\Xml\XmlExplorer;
+use Matraux\XmlORM\Xml\XmlNamespace;
+use ReflectionAttribute;
 use ReflectionClass;
+use ReflectionProperty;
+use RuntimeException;
+use Stringable;
+use Throwable;
 
 abstract class Entity implements Stringable
 {
@@ -29,8 +29,8 @@ abstract class Entity implements Stringable
 		$entity = new static();
 
 		$properties = PropertyMetadataFactory::create(static::class);
-		foreach($properties as $property) {
-			if($property->attribute) {
+		foreach ($properties as $property) {
+			if ($property->attribute) {
 				$entity->{$property->name} = $explorer->getAttribute($property->attribute);
 
 				continue;
@@ -42,22 +42,24 @@ abstract class Entity implements Stringable
 				continue;
 			}
 
-			if($type = $property->type) {
+			if ($type = $property->type) {
 				if (is_subclass_of($type, self::class)) {
 					/** @var class-string<static> $type */
 					$entity->{$property->name} = $type::fromExplorer($subExplorer);
+
 					continue;
 				}
 
 				if (is_subclass_of($type, Collection::class)) {
 					/** @var class-string<Collection<static>> $type */
 					$entity->{$property->name} = $type::create($subExplorer);
+
 					continue;
 				}
 			}
 
 			$value = $subExplorer->getValue();
-			if($property->type) {
+			if ($property->type) {
 				settype($value, $property->type);
 			}
 
@@ -65,6 +67,11 @@ abstract class Entity implements Stringable
 		}
 
 		return $entity;
+	}
+
+	final public static function create(): static
+	{
+		return new static();
 	}
 
 	/**
@@ -128,7 +135,7 @@ abstract class Entity implements Stringable
 					$elementProperty = $owner->createElement($name, (string) $value);
 				}
 
-				if($value !== null){
+				if ($value !== null) {
 					$element->appendChild($elementProperty);
 				}
 			}
@@ -141,11 +148,6 @@ abstract class Entity implements Stringable
 		}
 
 		return $xml;
-	}
-
-	final public static function create(): static
-	{
-		return new static();
 	}
 
 	final public function __toString(): string

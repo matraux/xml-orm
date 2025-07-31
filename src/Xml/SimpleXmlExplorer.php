@@ -2,47 +2,19 @@
 
 namespace Matraux\XmlORM\Xml;
 
-use Traversable;
-use SimpleXMLElement;
-use UnexpectedValueException;
-use Matraux\XmlORM\Xml\XmlNamespace;
 use Matraux\XmlORM\Exception\XmlParsingException;
+use SimpleXMLElement;
+use Traversable;
+use UnexpectedValueException;
 
 final class SimpleXmlExplorer extends XmlExplorer
 {
 
-	protected function __construct(protected SimpleXMLElement $xml)
-	{
-	}
-
-	public function offsetExists(mixed $offset): bool
-	{
-		if (!is_int($offset)) {
-			throw new UnexpectedValueException(sprintf('Expected offset type "positive-int", "%s" given.', gettype($offset)));
-		} elseif ($offset < 0) {
-			throw new UnexpectedValueException('Expected offset type "positive-int".');
-		}
-
-		return isset($this->xml[$offset]);
-	}
-
-	public function offsetGet(mixed $offset): static
-	{
-		if (!isset($this->xml[$offset])) {
-			throw new XmlParsingException(sprintf('Element with index %u not found.', $offset));
-		}
-
-		return new static($this->xml[$offset]);
-	}
-
-	/**
-	 * @var int<0,max>
-	 */
+	/** @var int<0,max> */
 	protected int $countCache;
 
-	public function count(): int
+	protected function __construct(protected SimpleXMLElement $xml)
 	{
-		return $this->countCache ??= $this->xml->count();
 	}
 
 	public static function fromFile(string $file): static
@@ -71,6 +43,31 @@ final class SimpleXmlExplorer extends XmlExplorer
 		}
 
 		return new static($xml);
+	}
+
+	public function offsetExists(mixed $offset): bool
+	{
+		if (!is_int($offset)) {
+			throw new UnexpectedValueException(sprintf('Expected offset type "positive-int", "%s" given.', gettype($offset)));
+		} elseif ($offset < 0) {
+			throw new UnexpectedValueException('Expected offset type "positive-int".');
+		}
+
+		return isset($this->xml[$offset]);
+	}
+
+	public function offsetGet(mixed $offset): static
+	{
+		if (!isset($this->xml[$offset])) {
+			throw new XmlParsingException(sprintf('Element with index %u not found.', $offset));
+		}
+
+		return new static($this->xml[$offset]);
+	}
+
+	public function count(): int
+	{
+		return $this->countCache ??= $this->xml->count();
 	}
 
 	public function getValue(): string
