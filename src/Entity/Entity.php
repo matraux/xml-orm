@@ -2,6 +2,7 @@
 
 namespace Matraux\XmlORM\Entity;
 
+use BackedEnum;
 use DOMDocument;
 use DOMNode;
 use Matraux\XmlORM\Collection\Collection;
@@ -40,25 +41,27 @@ abstract class Entity implements Stringable
 				continue;
 			}
 
+			$value = $subExplorer->getValue();
+
 			if ($type = $property->type) {
 				if (is_subclass_of($type, self::class)) {
 					/** @var class-string<static> $type */
 					$entity->{$property->name} = $type::fromExplorer($subExplorer);
 
 					continue;
-				}
-
-				if (is_subclass_of($type, Collection::class)) {
+				} elseif (is_subclass_of($type, Collection::class)) {
 					/** @var class-string<Collection<static>> $type */
 					$entity->{$property->name} = $type::create($subExplorer);
 
 					continue;
-				}
-			}
+				} elseif (is_string($value) && is_subclass_of($type, BackedEnum::class)) {
+					/** @var class-string<BackedEnum> $type */
+					$entity->{$property->name} = $type::tryFrom($value);
 
-			$value = $subExplorer->getValue();
-			if ($property->type) {
-				settype($value, $property->type);
+					continue;
+				}
+
+				settype($value, $type);
 			}
 
 			$entity->{$property->name} = $value;
