@@ -7,7 +7,6 @@ use DOMDocument;
 use DOMNode;
 use Matraux\XmlORM\Collection\Collection;
 use Matraux\XmlORM\Metadata\EntityMetadataFactory;
-use Matraux\XmlORM\Metadata\PropertyMetadataFactory;
 use Matraux\XmlORM\Xml\XmlExplorer;
 use ReflectionProperty;
 use RuntimeException;
@@ -27,8 +26,8 @@ abstract class Entity implements Stringable
 	{
 		$entity = new static();
 
-		$properties = PropertyMetadataFactory::create(static::class);
-		foreach ($properties as $property) {
+		$entityMetadata = EntityMetadataFactory::create(static::class);
+		foreach ($entityMetadata->properties as $property) {
 			if ($property->attribute) {
 				$entity->{$property->name} = $explorer->getAttribute($property->attribute);
 
@@ -80,10 +79,10 @@ abstract class Entity implements Stringable
 	 */
 	public function asXml(?DOMNode $document = null): string
 	{
-		$entityMetadata = EntityMetadataFactory::create(static::class);
-
 		// phpcs:ignore
 		$document ??= new DOMDocument('1.0', static::Encoding);
+
+		$entityMetadata = EntityMetadataFactory::create(static::class);
 
 		$owner = $document instanceof DOMDocument ? $document : $document->ownerDocument;
 		if (!$owner) {
@@ -104,8 +103,7 @@ abstract class Entity implements Stringable
 			$owner->documentElement->setAttribute('xmlns:' . $xmlns::getName(), $xmlns::getSource());
 		}
 
-		$properties = PropertyMetadataFactory::create(static::class);
-		foreach ($properties as $property) {
+		foreach ($entityMetadata->properties as $property) {
 			if (!new ReflectionProperty(static::class, $property->name)->isInitialized($this)) {
 				continue;
 			}

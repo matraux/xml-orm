@@ -22,20 +22,20 @@ final readonly class PropertyMetadata
 
 	public ?string $type;
 
-	protected function __construct(protected readonly ReflectionProperty $reflection)
+	protected function __construct(ReflectionProperty $reflection)
 	{
-		$this->name = $this->reflection->name;
+		$this->name = $reflection->name;
 
-		$attributes = $this->reflection->getAttributes(XmlAttribute::class, ReflectionAttribute::IS_INSTANCEOF);
+		$attributes = $reflection->getAttributes(XmlAttribute::class, ReflectionAttribute::IS_INSTANCEOF);
 		$this->attribute = array_shift($attributes)?->newInstance()->name;
 
-		$attributes = $this->reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
-		$this->index = array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
+		$attributes = $reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
+		$this->index = array_shift($attributes)?->newInstance()->name ?? $reflection->name;
 
-		$attributes = $this->reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
+		$attributes = $reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
 		$this->namespace = array_shift($attributes)?->newInstance();
 
-		$type = Type::fromReflection($this->reflection);
+		$type = Type::fromReflection($reflection);
 		$this->type = $type?->getSingleName();
 	}
 

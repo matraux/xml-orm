@@ -8,10 +8,10 @@ use Attribute;
  * Mapper for attributes of XML elements
  */
 #[Attribute]
-final class XmlAttribute
+final readonly class XmlAttribute
 {
 
-	public function __construct(public readonly string $name)
+	public function __construct(public string $name)
 	{
 	}
 

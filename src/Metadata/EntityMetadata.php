@@ -15,16 +15,26 @@ final readonly class EntityMetadata
 
 	public ?XmlNamespace $namespace;
 
+	/** @var array<PropertyMetadata> */
+	public array $properties;
+
 	/**
 	 * @param ReflectionClass<Entity> $reflection
 	 */
-	protected function __construct(protected ReflectionClass $reflection)
+	protected function __construct(ReflectionClass $reflection)
 	{
-		$attributes = $this->reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
-		$this->name = array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
+		$attributes = $reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
+		$this->name = array_shift($attributes)?->newInstance()->name ?? $reflection->name;
 
-		$attributes = $this->reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
+		$attributes = $reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
 		$this->namespace = array_shift($attributes)?->newInstance();
+
+		$properties = [];
+		foreach ($reflection->getProperties() as $property) {
+			$properties[] = PropertyMetadata::create($property);
+		}
+
+		$this->properties = $properties;
 	}
 
 	/**
