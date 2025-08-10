@@ -45,6 +45,7 @@ composer require matraux/xml-orm
 | 1.4.1 | 8.3+ | Parsing via PHP attributes
 | 1.5.0 | 8.4+ | Performance optimization, metadata caching
 | 1.6.0 | 8.4+ | Enum support, security hardening, doc fixes
+| 1.6.1 | 8.4+ | Optimized metadata
 
 <br>
 
