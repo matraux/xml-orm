@@ -50,7 +50,7 @@ abstract class Entity implements Stringable
 					continue;
 				} elseif (is_subclass_of($type, Collection::class)) {
 					/** @var class-string<Collection<static>> $type */
-					$entity->{$property->name} = $type::create($subExplorer);
+					$entity->{$property->name} = $type::fromExplorer($subExplorer);
 
 					continue;
 				} elseif (is_string($value) && is_subclass_of($type, BackedEnum::class)) {

@@ -31,7 +31,13 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 	{
 	}
 
-	final public static function create(?XmlExplorer $explorer = null): static
+	final public static function create(): static
+	{
+		/** @var static<TEntity> */
+		return new static();
+	}
+
+	final public static function fromExplorer(XmlExplorer $explorer): static
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);

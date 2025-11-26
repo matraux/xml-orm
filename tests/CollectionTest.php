@@ -32,7 +32,7 @@ final class CollectionTest extends TestCase
 			->withIndex('item', $xmlNamespace);
 
 		Assert::type(ItemCollection::class, ItemCollection::create());
-		Assert::type(ItemCollection::class, ItemCollection::create($explorer));
+		Assert::type(ItemCollection::class, ItemCollection::fromExplorer($explorer));
 	}
 
 	public function testCreateEntity(): void
@@ -54,7 +54,7 @@ final class CollectionTest extends TestCase
 			->withIndex('main', $xmlNamespace)
 			->withIndex('item', $xmlNamespace);
 
-		Assert::count(20000, ItemCollection::create($explorer));
+		Assert::count(20000, ItemCollection::fromExplorer($explorer));
 	}
 
 	public function testArrayAccess(): void
@@ -67,7 +67,7 @@ final class CollectionTest extends TestCase
 			->withIndex('main', $xmlNamespace)
 			->withIndex('item', $xmlNamespace);
 
-		$collection = ItemCollection::create($explorer);
+		$collection = ItemCollection::fromExplorer($explorer);
 
 		Assert::exception(function () use ($collection): void {
 			$value = isset($collection[-1]);
@@ -92,7 +92,7 @@ final class CollectionTest extends TestCase
 			->withIndex('main', $xmlNamespace)
 			->withIndex('item', $xmlNamespace);
 
-		$collection = ItemCollection::create($explorer);
+		$collection = ItemCollection::fromExplorer($explorer);
 		foreach ($collection as $index => $itemEntity) {
 			Assert::type('int', $index);
 			Assert::type(ItemEntity::class, $itemEntity);
