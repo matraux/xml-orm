@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Entity;
+namespace Matraux\XmlOrm\Entity;
 
 use DOMDocument;
 use DOMNode;
-use Matraux\XmlORM\Collection\Collection;
-use Matraux\XmlORM\Metadata\EntityMetadataFactory;
-use Matraux\XmlORM\Xml\Explorer;
+use Matraux\XmlOrm\Collection\Collection;
+use Matraux\XmlOrm\Metadata\EntityMetadataFactory;
+use Matraux\XmlOrm\Xml\Explorer;
 use ReflectionProperty;
 use RuntimeException;
 use Stringable;

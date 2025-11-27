@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Xml;
+namespace Matraux\XmlOrm\Xml;
 
-use Matraux\XmlORM\Exception\XmlParsingException;
+use Matraux\XmlOrm\Exception\XmlParsingException;
 use OutOfRangeException;
 use SimpleXMLElement;
 use Traversable;

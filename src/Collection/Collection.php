@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Collection;
+namespace Matraux\XmlOrm\Collection;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Exception\ReadonlyAccessException;
-use Matraux\XmlORM\Xml\Explorer;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Exception\ReadonlyAccessException;
+use Matraux\XmlOrm\Xml\Explorer;
 use OutOfRangeException;
 use RuntimeException;
 use Traversable;

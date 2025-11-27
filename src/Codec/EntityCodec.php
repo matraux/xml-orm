@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Codec;
+namespace Matraux\XmlOrm\Codec;
 
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Metadata\PropertyMetadata;
-use Matraux\XmlORM\Xml\Explorer;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Metadata\PropertyMetadata;
+use Matraux\XmlOrm\Xml\Explorer;
 
 final class EntityCodec implements Codec
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Xml;
+namespace Matraux\XmlOrm\Xml;
 
 use Attribute;
 

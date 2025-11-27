@@ -5,7 +5,7 @@
 ## XML namespace
 ```php
 use Attribute;
-use Matraux\XmlORM\Xml\XmlNamespace;
+use Matraux\XmlOrm\Xml\XmlNamespace;
 
 #[Attribute]
 final class GeneralXmlNamespace extends XmlNamespace
@@ -26,9 +26,9 @@ final class GeneralXmlNamespace extends XmlNamespace
 
 ## Entity
 ```php
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Xml\XmlElement;
-use Matraux\XmlORM\Xml\XmlAttribute;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Xml\XmlElement;
+use Matraux\XmlOrm\Xml\XmlAttribute;
 
 #[GeneralXmlNamespace] // create XML element with namespace "gen"
 #[XmlElement('item')] // create XML element with name "item"
@@ -49,7 +49,7 @@ final class ItemEntity extends Entity
 
 ## Collection
 ```php
-use Matraux\XmlORM\Collection\Collection;
+use Matraux\XmlOrm\Collection\Collection;
 
 /**
  * @extends Collection<ItemEntity>

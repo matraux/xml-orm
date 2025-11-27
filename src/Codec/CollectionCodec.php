@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Codec;
+namespace Matraux\XmlOrm\Codec;
 
-use Matraux\XmlORM\Codec\Codec;
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Collection\Collection;
-use Matraux\XmlORM\Metadata\PropertyMetadata;
-use Matraux\XmlORM\Xml\Explorer;
+use Matraux\XmlOrm\Codec\Codec;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Collection\Collection;
+use Matraux\XmlOrm\Metadata\PropertyMetadata;
+use Matraux\XmlOrm\Xml\Explorer;
 
 final class CollectionCodec implements Codec
 {

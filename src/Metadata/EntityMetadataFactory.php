@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Metadata;
+namespace Matraux\XmlOrm\Metadata;
 
-use Matraux\XmlORM\Entity\Entity;
+use Matraux\XmlOrm\Entity\Entity;
 use ReflectionClass;
 
 final class EntityMetadataFactory

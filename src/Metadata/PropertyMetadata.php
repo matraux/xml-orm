@@ -1,24 +1,24 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Metadata;
+namespace Matraux\XmlOrm\Metadata;
 
 use BackedEnum;
 use Nette\Utils\Type;
 use ReflectionProperty;
 use ReflectionAttribute;
-use Matraux\XmlORM\Codec\Codec;
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Xml\XmlElement;
-use Matraux\XmlORM\Xml\XmlAttribute;
-use Matraux\XmlORM\Xml\XmlNamespace;
-use Matraux\XmlORM\Codec\EntityCodec;
-use Matraux\XmlORM\Codec\BackedEnumCodec;
-use Matraux\XmlORM\Codec\CollectionCodec;
-use Matraux\XmlORM\Collection\Collection;
+use Matraux\XmlOrm\Codec\Codec;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Xml\XmlElement;
+use Matraux\XmlOrm\Xml\XmlAttribute;
+use Matraux\XmlOrm\Xml\XmlNamespace;
+use Matraux\XmlOrm\Codec\EntityCodec;
+use Matraux\XmlOrm\Codec\BackedEnumCodec;
+use Matraux\XmlOrm\Codec\CollectionCodec;
+use Matraux\XmlOrm\Collection\Collection;
 use Matraux\JsonOrm\Exception\CodecException;
-use Matraux\XmlORM\Codec\BoolCodec;
-use Matraux\XmlORM\Codec\FloatCodec;
-use Matraux\XmlORM\Codec\IntCodec;
+use Matraux\XmlOrm\Codec\BoolCodec;
+use Matraux\XmlOrm\Codec\FloatCodec;
+use Matraux\XmlOrm\Codec\IntCodec;
 
 final readonly class PropertyMetadata
 {

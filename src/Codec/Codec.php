@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Codec;
+namespace Matraux\XmlOrm\Codec;
 
-use Matraux\XmlORM\Metadata\PropertyMetadata;
-use Matraux\XmlORM\Xml\Explorer;
+use Matraux\XmlOrm\Metadata\PropertyMetadata;
+use Matraux\XmlOrm\Xml\Explorer;
 
 interface Codec
 {

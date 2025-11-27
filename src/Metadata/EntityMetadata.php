@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Metadata;
+namespace Matraux\XmlOrm\Metadata;
 
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Xml\XmlElement;
-use Matraux\XmlORM\Xml\XmlNamespace;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Xml\XmlElement;
+use Matraux\XmlOrm\Xml\XmlNamespace;
 use ReflectionAttribute;
 use ReflectionClass;
 

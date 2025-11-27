@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORM\Xml;
+namespace Matraux\XmlOrm\Xml;
 
 use Countable;
 use ArrayAccess;
 use Traversable;
 use LogicException;
 use IteratorAggregate;
-use Matraux\XmlORM\Xml\XmlNamespace;
+use Matraux\XmlOrm\Xml\XmlNamespace;
 
 /**
  * @implements IteratorAggregate<int|string,static>
