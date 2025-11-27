@@ -7,7 +7,7 @@ use Countable;
 use IteratorAggregate;
 use Matraux\XmlORM\Entity\Entity;
 use Matraux\XmlORM\Exception\ReadonlyAccessException;
-use Matraux\XmlORM\Xml\XmlExplorer;
+use Matraux\XmlORM\Xml\Explorer;
 use OutOfRangeException;
 use RuntimeException;
 use Traversable;
@@ -27,7 +27,7 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 	/** @var int<0,max> */
 	final protected int $countCache;
 
-	final protected function __construct(protected ?XmlExplorer $explorer = null)
+	final protected function __construct(protected ?Explorer $explorer = null)
 	{
 	}
 
@@ -37,7 +37,7 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 		return new static();
 	}
 
-	final public static function fromExplorer(XmlExplorer $explorer): static
+	final public static function fromExplorer(Explorer $explorer): static
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);
