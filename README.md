@@ -46,6 +46,7 @@ composer require matraux/xml-orm
 | 1.5.0 | 8.4+ | Performance optimization, metadata caching
 | 1.6.0 | 8.4+ | Enum support, security hardening, doc fixes
 | 1.6.1 | 8.4+ | Optimized metadata
+| 2.0.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
 
 <br>
 
