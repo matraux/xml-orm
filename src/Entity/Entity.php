@@ -2,16 +2,14 @@
 
 namespace Matraux\XmlORM\Entity;
 
-use BackedEnum;
 use DOMDocument;
 use DOMNode;
 use Matraux\XmlORM\Collection\Collection;
 use Matraux\XmlORM\Metadata\EntityMetadataFactory;
-use Matraux\XmlORM\Xml\XmlExplorer;
+use Matraux\XmlORM\Xml\Explorer;
 use ReflectionProperty;
 use RuntimeException;
 use Stringable;
-use Throwable;
 
 abstract class Entity implements Stringable
 {
@@ -22,48 +20,27 @@ abstract class Entity implements Stringable
 	{
 	}
 
-	final static function fromExplorer(XmlExplorer $explorer): static
+	final static function fromExplorer(Explorer $explorer): static
 	{
 		$entity = new static();
 
 		$entityMetadata = EntityMetadataFactory::create(static::class);
 		foreach ($entityMetadata->properties as $property) {
 			if ($property->attribute) {
-				$entity->{$property->name} = $explorer->getAttribute($property->attribute);
-
+				$entity->{$property->name} = $explorer->attribute($property->attribute);
 				continue;
 			}
 
-			try {
-				$subExplorer = $explorer->withIndex($property->index, $property->namespace);
-			} catch (Throwable) {
+			if(!isset($explorer->withNamespace($property->namespace)[$property->index])) {
 				continue;
 			}
 
-			$value = $subExplorer->getValue();
-
-			if ($type = $property->type) {
-				if (is_subclass_of($type, self::class)) {
-					/** @var class-string<static> $type */
-					$entity->{$property->name} = $type::fromExplorer($subExplorer);
-
-					continue;
-				} elseif (is_subclass_of($type, Collection::class)) {
-					/** @var class-string<Collection<static>> $type */
-					$entity->{$property->name} = $type::fromExplorer($subExplorer);
-
-					continue;
-				} elseif (is_string($value) && is_subclass_of($type, BackedEnum::class)) {
-					/** @var class-string<BackedEnum> $type */
-					$entity->{$property->name} = $type::tryFrom($value);
-
-					continue;
-				}
-
-				settype($value, $type);
+			if($property->codec) {
+				$entity->{$property->name} = $property->codec->decode($explorer, $property);
+				continue;
 			}
 
-			$entity->{$property->name} = $value;
+			$entity->{$property->name} = $explorer->withNamespace($property->namespace)->withIndex($property->index)->value;
 		}
 
 		return $entity;
@@ -108,7 +85,7 @@ abstract class Entity implements Stringable
 				continue;
 			}
 
-			$value = $this->{$property->name};
+			$value = $property->codec ? $property->codec->encode($this->{$property->name}, $property) : $this->{$property->name};
 
 			if ($value instanceof self) {
 				$value->asXml($element);
