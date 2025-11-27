@@ -24,12 +24,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Matraux\\XmlORM\\": "src"
+			"Matraux\\XmlOrm\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Matraux\\XmlORMTest\\": "tests"
+			"Matraux\\XmlOrmTest\\": "tests"
 		}
 	},
 	"support": {
