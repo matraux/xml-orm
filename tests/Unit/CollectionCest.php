@@ -2,107 +2,79 @@
 
 namespace Matraux\XmlOrmTest;
 
+use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
 use Matraux\XmlOrmTest\Dto\Entity\ItemEntity;
 use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrmTest\FileSystem\Folder;
+use Matraux\XmlOrmTest\Support\UnitTester;
 use OutOfRangeException;
 use Tester\Assert;
 use Tester\TestCase;
 use UnexpectedValueException;
 
-require_once __DIR__ . '/Bootstrap.php';
-
-Bootstrap::tester();
-
-/**
- * @testCase
- */
-final class CollectionCest extends TestCase
+final class CollectionCest
 {
 
-	public function testCreate(): void
+	protected static function createExplorer(): Explorer
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
-
-		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withNamespace($xmlNamespace)
+		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
+			->withNamespace(new GeneralXmlNamespace())
 			->withIndex('data')
 			->withIndex('main')
 			->withIndex('item');
-
-		Assert::type(ItemCollection::class, ItemCollection::create());
-		Assert::type(ItemCollection::class, ItemCollection::fromExplorer($explorer));
 	}
 
-	public function testCreateEntity(): void
+	public function testCreate(UnitTester $tester): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
+		$explorer = static::createExplorer();
+		$tester->assertInstanceOf(ItemCollection::class, ItemCollection::create());
+		$tester->assertInstanceOf(ItemCollection::class, ItemCollection::fromExplorer($explorer));
+	}
 
+	public function testCreateEntity(UnitTester $tester): void
+	{
 		$collection = ItemCollection::create();
-
-		Assert::type(ItemEntity::class, $collection->createEntity());
+		$tester->assertInstanceOf(ItemEntity::class, $collection->createEntity());
 	}
 
-	public function testCountable(): void
+	public function testCountable(UnitTester $tester): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
-
-		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withNamespace($xmlNamespace)
-			->withIndex('data')
-			->withIndex('main')
-			->withIndex('item');
-
-		Assert::count(20000, ItemCollection::fromExplorer($explorer));
+		$explorer = static::createExplorer();
+		$tester->assertCount(20000, ItemCollection::fromExplorer($explorer));
 	}
 
-	public function testArrayAccess(): void
+	public function testArrayAccess(UnitTester $tester): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
-
-		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withNamespace($xmlNamespace)
-			->withIndex('data')
-			->withIndex('main')
-			->withIndex('item');
-
+		$explorer = static::createExplorer();
 		$collection = ItemCollection::fromExplorer($explorer);
 
-		Assert::exception(function () use ($collection): void {
-			$value = isset($collection[-1]);
-		}, UnexpectedValueException::class);
+		$tester->assertEquals(true, isset($collection[0]));
 
-		Assert::equal(true, isset($collection[0]));
+		$tester->assertInstanceOf(ItemEntity::class, $collection[0]);
 
-		Assert::exception(function () use ($collection): void {
-			$value = $collection[20000];
-		}, OutOfRangeException::class);
+		$tester->expectThrowable(UnexpectedValueException::class, function() use($collection){
+			$collection[-1];
+		});
 
-		Assert::type(ItemEntity::class, $collection[0]);
+		$tester->expectThrowable(UnexpectedValueException::class, function() use($collection){
+			$collection['first'];
+		});
+
+		$tester->expectThrowable(OutOfRangeException::class, function() use($collection){
+			$collection[20000];
+		});
 	}
 
-	public function testIterator(): void
+	public function testIterator(UnitTester $tester): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
-
-		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withNamespace($xmlNamespace)
-			->withIndex('data')
-			->withIndex('main')
-			->withIndex('item');
-
+		$explorer = static::createExplorer();
 		$collection = ItemCollection::fromExplorer($explorer);
 		foreach ($collection as $index => $itemEntity) {
-			Assert::type('int', $index);
-			Assert::type(ItemEntity::class, $itemEntity);
+			$tester->assertIsInt($index);
+			$tester->assertInstanceOf(ItemEntity::class, $itemEntity);
 		}
 	}
 
 }
-
-(new CollectionCest())->run();
