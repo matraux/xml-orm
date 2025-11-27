@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORMTest;
+namespace Matraux\XmlOrmTest;
 
-use Matraux\XmlORM\Xml\SimpleExplorer;
-use Matraux\XmlORMTest\Collection\ItemCollection;
-use Matraux\XmlORMTest\Entity\DataEntity;
-use Matraux\XmlORMTest\Entity\MainEntity;
-use Matraux\XmlORMTest\Entity\ResponseEntity;
-use Matraux\XmlORMTest\Enum\Active;
-use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
+use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
+use Matraux\XmlOrmTest\Dto\Entity\DataEntity;
+use Matraux\XmlOrmTest\Dto\Entity\MainEntity;
+use Matraux\XmlOrmTest\Dto\Entity\ResponseEntity;
+use Matraux\XmlOrmTest\Dto\Entity\Enum\Active;
+use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
 use Tester\Assert;
 use Tester\TestCase;
 

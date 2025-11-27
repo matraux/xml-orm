@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORMTest;
+namespace Matraux\XmlOrmTest;
 
-use Matraux\XmlORM\Xml\SimpleExplorer;
-use Matraux\XmlORMTest\Collection\ItemCollection;
-use Matraux\XmlORMTest\Entity\ItemEntity;
-use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
+use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
+use Matraux\XmlOrmTest\Dto\Entity\ItemEntity;
+use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
 use OutOfRangeException;
 use Tester\Assert;
 use Tester\TestCase;
@@ -18,7 +18,7 @@ Bootstrap::tester();
 /**
  * @testCase
  */
-final class CollectionTest extends TestCase
+final class CollectionCest extends TestCase
 {
 
 	public function testCreate(): void
@@ -105,4 +105,4 @@ final class CollectionTest extends TestCase
 
 }
 
-(new CollectionTest())->run();
+(new CollectionCest())->run();

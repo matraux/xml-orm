@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORMTest\Xml;
+namespace Matraux\XmlOrmTest\Dto\Xml;
 
 use Attribute;
-use Matraux\XmlORM\Xml\XmlNamespace;
+use Matraux\XmlOrm\Xml\XmlNamespace;
 
 #[Attribute]
 final class GeneralXmlNamespace extends XmlNamespace

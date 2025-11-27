@@ -1,42 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORMTest;
+namespace Matraux\JsonOrmTest;
 
-use Matraux\XmlORM\Collection\Collection;
-use Matraux\XmlORM\Entity\Entity;
-use Matraux\XmlORM\Xml\SimpleExplorer;
-use Matraux\XmlORMTest\Collection\ItemCollection;
-use Matraux\XmlORMTest\Entity\DataEntity;
-use Matraux\XmlORMTest\Entity\ResponseEntity;
-use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrmTest\Utils\Tracy;
+use Tracy\Debugger;
 
-require_once __DIR__ . '/Bootstrap.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-Bootstrap::dumper();
-dump('Test dumper');
+Tracy::setup();
+Debugger::dump('Start dump');
 
-
-$explorer = SimpleExplorer::fromFile(__DIR__ . '/assets/general.xml');
-
-$response = ResponseEntity::fromExplorer($explorer);
-bdump($response);
-bdump($response->data);
-bdump($response->data->main);
-bdump($response->data->main->items);
-bdump($response->data->main->items[0]);
-bdump($response->data->main->items[1]);
-bdump($response->data->main->items[2]);
-
-$counter = 0;
-foreach($response->data->main->items as $item)
-{
-	if($counter++ === 19999) {
-		bdump($item);
-		break;
-	}
-}
-
-bdump((string) $response->data->main->items[0]);
-
-dump('Exit dumper');
+Debugger::dump('Finish dump');
 exit;

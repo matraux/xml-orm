@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlORMTest;
+namespace Matraux\XmlOrmTest;
 
-use Matraux\XmlORM\Exception\XmlParsingException;
-use Matraux\XmlORM\Xml\SimpleExplorer;
-use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Exception\XmlParsingException;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
+use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
 use Nette\Utils\FileSystem;
 use OutOfRangeException;
 use Tester\Assert;
