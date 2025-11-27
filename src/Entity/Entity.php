@@ -7,7 +7,6 @@ use DOMNode;
 use Matraux\XmlOrm\Collection\Collection;
 use Matraux\XmlOrm\Metadata\EntityMetadataFactory;
 use Matraux\XmlOrm\Xml\Explorer;
-use ReflectionProperty;
 use RuntimeException;
 use Stringable;
 
@@ -83,7 +82,7 @@ abstract class Entity implements Stringable
 		}
 
 		foreach ($entityMetadata->properties as $property) {
-			if (!new ReflectionProperty(static::class, $property->name)->isInitialized($this)) {
+			if (!$property->isInitialized($this)) {
 				continue;
 			}
 

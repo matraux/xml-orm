@@ -17,6 +17,7 @@ use Matraux\XmlOrm\Xml\XmlAttribute;
 use Matraux\XmlOrm\Xml\XmlElement;
 use Matraux\XmlOrm\Xml\XmlNamespace;
 use Nette\Utils\Type;
+use PropertyHookType;
 use ReflectionAttribute;
 use ReflectionProperty;
 
@@ -35,7 +36,7 @@ final readonly class PropertyMetadata
 
 	public ?Codec $codec;
 
-	protected function __construct(ReflectionProperty $reflection)
+	protected function __construct(protected readonly ReflectionProperty $reflection)
 	{
 		$this->name = $reflection->name;
 
@@ -78,6 +79,11 @@ final readonly class PropertyMetadata
 	public static function create(ReflectionProperty $reflection): static
 	{
 		return new static($reflection);
+	}
+
+	public function isInitialized(Entity $entity): bool
+	{
+		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
 }
