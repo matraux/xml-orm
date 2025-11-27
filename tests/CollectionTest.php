@@ -2,7 +2,7 @@
 
 namespace Matraux\XmlORMTest;
 
-use Matraux\XmlORM\Xml\SimpleXmlExplorer;
+use Matraux\XmlORM\Xml\SimpleExplorer;
 use Matraux\XmlORMTest\Collection\ItemCollection;
 use Matraux\XmlORMTest\Entity\ItemEntity;
 use Matraux\XmlORMTest\Xml\GeneralXmlNamespace;
@@ -26,10 +26,11 @@ final class CollectionTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace)
-			->withIndex('main', $xmlNamespace)
-			->withIndex('item', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data')
+			->withIndex('main')
+			->withIndex('item');
 
 		Assert::type(ItemCollection::class, ItemCollection::create());
 		Assert::type(ItemCollection::class, ItemCollection::fromExplorer($explorer));
@@ -49,10 +50,11 @@ final class CollectionTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace)
-			->withIndex('main', $xmlNamespace)
-			->withIndex('item', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data')
+			->withIndex('main')
+			->withIndex('item');
 
 		Assert::count(20000, ItemCollection::fromExplorer($explorer));
 	}
@@ -62,10 +64,11 @@ final class CollectionTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace)
-			->withIndex('main', $xmlNamespace)
-			->withIndex('item', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data')
+			->withIndex('main')
+			->withIndex('item');
 
 		$collection = ItemCollection::fromExplorer($explorer);
 
@@ -87,10 +90,11 @@ final class CollectionTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace)
-			->withIndex('main', $xmlNamespace)
-			->withIndex('item', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data')
+			->withIndex('main')
+			->withIndex('item');
 
 		$collection = ItemCollection::fromExplorer($explorer);
 		foreach ($collection as $index => $itemEntity) {

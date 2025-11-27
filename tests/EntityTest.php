@@ -2,7 +2,7 @@
 
 namespace Matraux\XmlORMTest;
 
-use Matraux\XmlORM\Xml\SimpleXmlExplorer;
+use Matraux\XmlORM\Xml\SimpleExplorer;
 use Matraux\XmlORMTest\Collection\ItemCollection;
 use Matraux\XmlORMTest\Entity\DataEntity;
 use Matraux\XmlORMTest\Entity\MainEntity;
@@ -27,8 +27,9 @@ final class EntityTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data');
 
 		Assert::type(DataEntity::class, DataEntity::create());
 		Assert::type(DataEntity::class, DataEntity::fromExplorer($explorer));
@@ -39,8 +40,9 @@ final class EntityTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$xmlNamespace = new GeneralXmlNamespace();
-		$explorer = SimpleXmlExplorer::fromFile(Bootstrap::Assets . 'general.xml')
-			->withIndex('data', $xmlNamespace);
+		$explorer = SimpleExplorer::fromFile(Bootstrap::Assets . 'general.xml')
+			->withNamespace($xmlNamespace)
+			->withIndex('data');
 		$entity = DataEntity::fromExplorer($explorer);
 
 		Assert::type(MainEntity::class, $entity->main);
