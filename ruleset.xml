@@ -4,20 +4,28 @@
 	<arg name="extensions" value="php"/>
 	<arg name="encoding" value="utf-8"/>
 	<arg value="ps"/>
-	<arg name="cache" value="./temp/phpcs.cache"/>
+	<arg name="cache" value="/tmp/phpcs.cache"/>
 	<arg name="warning-severity" value="0"/>
+
+	<exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
 
 	<rule ref="./vendor/contributte/qa/ruleset-8.4.xml">
 		<exclude name="SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition"/>
+		<exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
 	</rule>
+
+	<rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
 
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
 			<property name="rootNamespaces" type="array">
-				<element key="src" value="Matraux\XmlORM"/>
-				<element key="tests" value="Matraux\XmlORMTest"/>
+				<element key="src" value="Matraux\XmlOrm"/>
+				<element key="tests" value="Matraux\XmlOrmTest"/>
 			</property>
 		</properties>
 	</rule>
+
+	<file>src</file>
+	<file>tests</file>
 
 </ruleset>

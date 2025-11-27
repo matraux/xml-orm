@@ -1,0 +1,17 @@
+namespace: Matraux\XmlOrmTest
+support_namespace: Support
+
+paths:
+  tests: tests
+  output: /tmp/codeception
+  support: tests/Support
+  data: tests/data
+
+settings:
+  shuffle: false
+  lint: true
+  colors: true
+
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
