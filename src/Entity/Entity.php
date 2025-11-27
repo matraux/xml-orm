@@ -28,15 +28,17 @@ abstract class Entity implements Stringable
 		foreach ($entityMetadata->properties as $property) {
 			if ($property->attribute) {
 				$entity->{$property->name} = $explorer->attribute($property->attribute);
+
 				continue;
 			}
 
-			if(!isset($explorer->withNamespace($property->namespace)[$property->index])) {
+			if (!isset($explorer->withNamespace($property->namespace)[$property->index])) {
 				continue;
 			}
 
-			if($property->codec) {
+			if ($property->codec) {
 				$entity->{$property->name} = $property->codec->decode($explorer, $property);
+
 				continue;
 			}
 

@@ -3,22 +3,22 @@
 namespace Matraux\XmlOrm\Metadata;
 
 use BackedEnum;
-use Nette\Utils\Type;
-use ReflectionProperty;
-use ReflectionAttribute;
-use Matraux\XmlOrm\Codec\Codec;
-use Matraux\XmlOrm\Entity\Entity;
-use Matraux\XmlOrm\Xml\XmlElement;
-use Matraux\XmlOrm\Xml\XmlAttribute;
-use Matraux\XmlOrm\Xml\XmlNamespace;
-use Matraux\XmlOrm\Codec\EntityCodec;
-use Matraux\XmlOrm\Codec\BackedEnumCodec;
-use Matraux\XmlOrm\Codec\CollectionCodec;
-use Matraux\XmlOrm\Collection\Collection;
 use Matraux\JsonOrm\Exception\CodecException;
+use Matraux\XmlOrm\Codec\BackedEnumCodec;
 use Matraux\XmlOrm\Codec\BoolCodec;
+use Matraux\XmlOrm\Codec\Codec;
+use Matraux\XmlOrm\Codec\CollectionCodec;
+use Matraux\XmlOrm\Codec\EntityCodec;
 use Matraux\XmlOrm\Codec\FloatCodec;
 use Matraux\XmlOrm\Codec\IntCodec;
+use Matraux\XmlOrm\Collection\Collection;
+use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Xml\XmlAttribute;
+use Matraux\XmlOrm\Xml\XmlElement;
+use Matraux\XmlOrm\Xml\XmlNamespace;
+use Nette\Utils\Type;
+use ReflectionAttribute;
+use ReflectionProperty;
 
 final readonly class PropertyMetadata
 {
@@ -58,11 +58,11 @@ final readonly class PropertyMetadata
 
 		if ($codec = array_shift($attributes)?->newInstance()) {
 			$this->codec = $codec;
-		} elseif($this->type && is_subclass_of($this->type, Entity::class)) {
+		} elseif ($this->type && is_subclass_of($this->type, Entity::class)) {
 			$this->codec = new EntityCodec();
 		} elseif ($this->type && is_subclass_of($this->type, Collection::class)) {
 			$this->codec = new CollectionCodec();
-		} elseif($this->type && is_subclass_of($this->type, BackedEnum::class)) {
+		} elseif ($this->type && is_subclass_of($this->type, BackedEnum::class)) {
 			$this->codec = new BackedEnumCodec();
 		} elseif ($this->type === 'bool') {
 			$this->codec = new BoolCodec();

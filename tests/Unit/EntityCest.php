@@ -2,39 +2,30 @@
 
 namespace Matraux\XmlOrmTest;
 
-use Tester\Assert;
-use Tester\TestCase;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
-use Matraux\XmlOrmTest\FileSystem\Folder;
-use Matraux\XmlOrmTest\Support\UnitTester;
+use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
 use Matraux\XmlOrmTest\Dto\Entity\DataEntity;
-use Matraux\XmlOrmTest\Dto\Entity\MainEntity;
 use Matraux\XmlOrmTest\Dto\Entity\Enum\Active;
+use Matraux\XmlOrmTest\Dto\Entity\MainEntity;
 use Matraux\XmlOrmTest\Dto\Entity\ResponseEntity;
 use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
+use Matraux\XmlOrmTest\FileSystem\Folder;
+use Matraux\XmlOrmTest\Support\UnitTester;
 
 final class EntityCest
 {
 
-	protected static function createExplorer(): Explorer
-	{
-		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
-			->withNamespace(new GeneralXmlNamespace())
-			->withIndex('data');
-	}
-
 	public function testCreate(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$tester->assertInstanceOf(DataEntity::class, DataEntity::create());
 		$tester->assertInstanceOf(DataEntity::class, DataEntity::fromExplorer($explorer));
 	}
 
 	public function testPropertyAssign(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$entity = DataEntity::fromExplorer($explorer);
 
 		$tester->assertInstanceOf(MainEntity::class, $entity->main);
@@ -57,6 +48,13 @@ final class EntityCest
 		$items->createEntity()->id = 2;
 
 		$tester->assertStringEqualsFile(Folder::create()->data . 'match.xml', (string) $response);
+	}
+
+	protected static function createExplorer(): Explorer
+	{
+		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
+			->withNamespace(new GeneralXmlNamespace())
+			->withIndex('data');
 	}
 
 }

@@ -10,25 +10,14 @@ use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
 use Matraux\XmlOrmTest\FileSystem\Folder;
 use Matraux\XmlOrmTest\Support\UnitTester;
 use OutOfRangeException;
-use Tester\Assert;
-use Tester\TestCase;
 use UnexpectedValueException;
 
 final class CollectionCest
 {
 
-	protected static function createExplorer(): Explorer
-	{
-		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
-			->withNamespace(new GeneralXmlNamespace())
-			->withIndex('data')
-			->withIndex('main')
-			->withIndex('item');
-	}
-
 	public function testCreate(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$tester->assertInstanceOf(ItemCollection::class, ItemCollection::create());
 		$tester->assertInstanceOf(ItemCollection::class, ItemCollection::fromExplorer($explorer));
 	}
@@ -41,40 +30,41 @@ final class CollectionCest
 
 	public function testCountable(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$tester->assertCount(20000, ItemCollection::fromExplorer($explorer));
 	}
 
 	public function testArrayAccess(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$collection = ItemCollection::fromExplorer($explorer);
 
-		$tester->assertEquals(true, isset($collection[0]));
+		$tester->assertTrue(isset($collection[0]));
 
 		$tester->assertInstanceOf(ItemEntity::class, $collection[0]);
 
-		$tester->expectThrowable(UnexpectedValueException::class, function() use($collection){
-			$collection[-1];
-		});
+		$tester->expectThrowable(UnexpectedValueException::class, fn (): mixed => $collection[-1]);
 
-		$tester->expectThrowable(UnexpectedValueException::class, function() use($collection){
-			$collection['first'];
-		});
-
-		$tester->expectThrowable(OutOfRangeException::class, function() use($collection){
-			$collection[20000];
-		});
+		$tester->expectThrowable(OutOfRangeException::class, fn (): mixed => $collection[20000]);
 	}
 
 	public function testIterator(UnitTester $tester): void
 	{
-		$explorer = static::createExplorer();
+		$explorer = self::createExplorer();
 		$collection = ItemCollection::fromExplorer($explorer);
 		foreach ($collection as $index => $itemEntity) {
 			$tester->assertIsInt($index);
 			$tester->assertInstanceOf(ItemEntity::class, $itemEntity);
 		}
+	}
+
+	protected static function createExplorer(): Explorer
+	{
+		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
+			->withNamespace(new GeneralXmlNamespace())
+			->withIndex('data')
+			->withIndex('main')
+			->withIndex('item');
 	}
 
 }

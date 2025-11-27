@@ -2,12 +2,11 @@
 
 namespace Matraux\XmlOrm\Xml;
 
-use Countable;
 use ArrayAccess;
-use Traversable;
-use LogicException;
+use Countable;
 use IteratorAggregate;
-use Matraux\XmlOrm\Xml\XmlNamespace;
+use LogicException;
+use Traversable;
 
 /**
  * @implements IteratorAggregate<int|string,static>

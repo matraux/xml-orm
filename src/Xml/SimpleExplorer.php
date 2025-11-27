@@ -11,24 +11,16 @@ use UnexpectedValueException;
 final class SimpleExplorer extends Explorer
 {
 
-	/** @var int<0,max> */
-	protected int $countCache;
-
 	public ?string $value
 	{
 		get => (string) $this->xml;
 	}
 
+	/** @var int<0,max> */
+	protected int $countCache;
+
 	protected function __construct(protected SimpleXMLElement $xml, protected ?XmlNamespace $namespace = null)
 	{
-	}
-
-	public function withNamespace(?XmlNamespace $namespace): static
-	{
-		$explorer = clone $this;
-		$explorer->namespace = $namespace;
-
-		return $explorer;
 	}
 
 	public static function fromFile(string $file): static
@@ -59,10 +51,20 @@ final class SimpleExplorer extends Explorer
 		return new static($xml);
 	}
 
+	public function withNamespace(?XmlNamespace $namespace): static
+	{
+		$explorer = clone $this;
+		$explorer->namespace = $namespace;
+
+		return $explorer;
+	}
+
 	public function offsetExists(mixed $offset): bool
 	{
-		if(!is_int($offset) && !is_string($offset)) {
+		if (!is_int($offset) && !is_string($offset)) {
 			throw new UnexpectedValueException(sprintf('Expected offset type "int|string", "%s" given.', gettype($offset)));
+		} elseif (is_int($offset) && $offset < 0) {
+			throw new UnexpectedValueException(sprintf('Expected offset value "positive-int", "%s" given.', $offset));
 		}
 
 		return is_int($offset) ?
@@ -72,7 +74,7 @@ final class SimpleExplorer extends Explorer
 
 	public function offsetGet(mixed $offset): static
 	{
-		if(!isset($this[$offset])) {
+		if (!isset($this[$offset])) {
 			throw new OutOfRangeException(sprintf('Element with index %s not found.', $offset));
 		}
 
@@ -101,7 +103,7 @@ final class SimpleExplorer extends Explorer
 
 	public function withIndex(int|string $index): static
 	{
-		if(is_string($index)) {
+		if (is_string($index)) {
 			$children = $this->xml->children($this->namespace?->getSource())->{$index};
 			if (!$children instanceof SimpleXMLElement || !isset($children[0])) {
 				throw new XmlParsingException(sprintf('Invalid XML: Element with index "%s" not found.', $index));
@@ -115,6 +117,5 @@ final class SimpleExplorer extends Explorer
 
 		return new static($children, $this->namespace);
 	}
-
 
 }

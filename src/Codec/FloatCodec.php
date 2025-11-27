@@ -2,7 +2,6 @@
 
 namespace Matraux\XmlOrm\Codec;
 
-use BackedEnum;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
@@ -17,7 +16,7 @@ final class FloatCodec implements Codec
 	public function decode(Explorer $explorer, PropertyMetadata $property): ?float
 	{
 		$type = $property->type;
-		if($type !== 'float') {
+		if ($type !== 'float') {
 			return null;
 		}
 

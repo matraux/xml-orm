@@ -2,7 +2,6 @@
 
 namespace Matraux\XmlOrm\Codec;
 
-use BackedEnum;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
@@ -17,7 +16,7 @@ final class IntCodec implements Codec
 	public function decode(Explorer $explorer, PropertyMetadata $property): ?int
 	{
 		$type = $property->type;
-		if($type !== 'int') {
+		if ($type !== 'int') {
 			return null;
 		}
 

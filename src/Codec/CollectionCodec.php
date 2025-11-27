@@ -2,9 +2,8 @@
 
 namespace Matraux\XmlOrm\Codec;
 
-use Matraux\XmlOrm\Codec\Codec;
-use Matraux\XmlOrm\Entity\Entity;
 use Matraux\XmlOrm\Collection\Collection;
+use Matraux\XmlOrm\Entity\Entity;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
