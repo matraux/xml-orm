@@ -2,38 +2,35 @@
 
 namespace Matraux\XmlORM\Xml;
 
-use ArrayAccess;
 use Countable;
-use IteratorAggregate;
-use LogicException;
+use ArrayAccess;
 use Traversable;
+use LogicException;
+use IteratorAggregate;
+use Matraux\XmlORM\Xml\XmlNamespace;
 
 /**
  * @implements IteratorAggregate<int|string,static>
  * @implements ArrayAccess<int|string,static>
  */
-abstract class XmlExplorer implements IteratorAggregate, Countable, ArrayAccess
+abstract class Explorer implements IteratorAggregate, Countable, ArrayAccess
 {
+
+	abstract public ?string $value
+	{
+		get;
+	}
 
 	/**
 	 * @return Traversable<int|string,static>
 	 */
 	abstract public function getIterator(): Traversable;
 
-	/**
-	 * Returns child explorer by element name and optional namespace.
-	 */
-	abstract public function withIndex(string $index, ?XmlNamespace $namespace = null): static;
+	abstract public function withIndex(string $index): static;
 
-	/**
-	 * Returns the string content of the current element.
-	 */
-	abstract public function getValue(): ?string;
+	abstract public function withNamespace(?XmlNamespace $namespace): static;
 
-	/**
-	 * Returns the value of an attribute or null if not found.
-	 */
-	abstract public function getAttribute(string $name): ?string;
+	abstract public function attribute(string $name): ?string;
 
 	/**
 	 * @return int<0,max>

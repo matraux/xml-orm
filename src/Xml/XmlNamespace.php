@@ -2,10 +2,6 @@
 
 namespace Matraux\XmlORM\Xml;
 
-/**
- * Mapper for XML namespaces
- * Define #[Attribute] for extended class
- */
 abstract class XmlNamespace
 {
 

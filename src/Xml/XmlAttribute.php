@@ -4,9 +4,6 @@ namespace Matraux\XmlORM\Xml;
 
 use Attribute;
 
-/**
- * Mapper for attributes of XML elements
- */
 #[Attribute]
 final readonly class XmlAttribute
 {
