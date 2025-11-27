@@ -2,12 +2,23 @@
 
 namespace Matraux\XmlORM\Metadata;
 
-use Matraux\XmlORM\Xml\XmlAttribute;
-use Matraux\XmlORM\Xml\XmlElement;
-use Matraux\XmlORM\Xml\XmlNamespace;
+use BackedEnum;
 use Nette\Utils\Type;
-use ReflectionAttribute;
 use ReflectionProperty;
+use ReflectionAttribute;
+use Matraux\XmlORM\Codec\Codec;
+use Matraux\XmlORM\Entity\Entity;
+use Matraux\XmlORM\Xml\XmlElement;
+use Matraux\XmlORM\Xml\XmlAttribute;
+use Matraux\XmlORM\Xml\XmlNamespace;
+use Matraux\XmlORM\Codec\EntityCodec;
+use Matraux\XmlORM\Codec\BackedEnumCodec;
+use Matraux\XmlORM\Codec\CollectionCodec;
+use Matraux\XmlORM\Collection\Collection;
+use Matraux\JsonOrm\Exception\CodecException;
+use Matraux\XmlORM\Codec\BoolCodec;
+use Matraux\XmlORM\Codec\FloatCodec;
+use Matraux\XmlORM\Codec\IntCodec;
 
 final readonly class PropertyMetadata
 {
@@ -21,6 +32,8 @@ final readonly class PropertyMetadata
 	public ?XmlNamespace $namespace;
 
 	public ?string $type;
+
+	public ?Codec $codec;
 
 	protected function __construct(ReflectionProperty $reflection)
 	{
@@ -37,6 +50,29 @@ final readonly class PropertyMetadata
 
 		$type = Type::fromReflection($reflection);
 		$this->type = $type?->getSingleName();
+
+		$attributes = $reflection->getAttributes(Codec::class, ReflectionAttribute::IS_INSTANCEOF);
+		if (count($attributes) > 1) {
+			throw new CodecException(sprintf('Property %s::$%s expects single %s attribute, multiple given.', $reflection->getDeclaringClass()->getName(), $this->name, Codec::class));
+		}
+
+		if ($codec = array_shift($attributes)?->newInstance()) {
+			$this->codec = $codec;
+		} elseif($this->type && is_subclass_of($this->type, Entity::class)) {
+			$this->codec = new EntityCodec();
+		} elseif ($this->type && is_subclass_of($this->type, Collection::class)) {
+			$this->codec = new CollectionCodec();
+		} elseif($this->type && is_subclass_of($this->type, BackedEnum::class)) {
+			$this->codec = new BackedEnumCodec();
+		} elseif ($this->type === 'bool') {
+			$this->codec = new BoolCodec();
+		} elseif ($this->type === 'int') {
+			$this->codec = new IntCodec();
+		} elseif ($this->type === 'float') {
+			$this->codec = new FloatCodec();
+		} else {
+			$this->codec = null;
+		}
 	}
 
 	public static function create(ReflectionProperty $reflection): static
