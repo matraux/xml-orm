@@ -2,25 +2,29 @@
 
 namespace Matraux\XmlOrm\Codec;
 
+use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
-final class FloatCodec implements Codec
+final readonly class FloatCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): ?float
+	/**
+	 * @throws CodecException
+	 */
+	public function encode(mixed $value, PropertyMetadata $metadata): float
 	{
-		return is_float($value) ? $value : null;
-	}
-
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?float
-	{
-		$type = $property->type;
-		if ($type !== 'float') {
-			return null;
+		if (!is_float($value)) {
+			throw new CodecException(sprintf('%s::$%s expects float, %s given.', $metadata->class, $metadata->name, get_debug_type($value)));
 		}
 
-		$value = $explorer[$property->index]->value;
+		return $value;
+	}
+
+
+	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?float
+	{
+		$value = $explorer[$metadata->index]->value;
 
 		return filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
 	}

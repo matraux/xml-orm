@@ -2,25 +2,29 @@
 
 namespace Matraux\XmlOrm\Codec;
 
+use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
-final class BoolCodec implements Codec
+final readonly class BoolCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): ?bool
+	/**
+	 * @throws CodecException
+	 */
+	public function encode(mixed $value, PropertyMetadata $metadata): bool
 	{
-		return is_bool($value) ? $value : null;
-	}
-
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?bool
-	{
-		$type = $property->type;
-		if ($type !== 'bool') {
-			return null;
+		if (!is_bool($value)) {
+			throw new CodecException(sprintf('%s::$%s expects bool, %s given.', $metadata->class, $metadata->name, get_debug_type($value)));
 		}
 
-		$value = $explorer[$property->index]->value;
+		return $value;
+	}
+
+
+	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?bool
+	{
+		$value = $explorer[$metadata->index]->value;
 
 		return filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
 	}

@@ -3,28 +3,43 @@
 namespace Matraux\XmlOrm\Codec;
 
 use BackedEnum;
+use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
+use TypeError;
+use ValueError;
 
-final class BackedEnumCodec implements Codec
+final readonly class BackedEnumCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): null|int|string
-	{
-		return $value instanceof BackedEnum ? $value->value : null;
-	}
+	/**
+	 * @param class-string<BackedEnum> $class
+	 */
+	public function __construct(protected string $class) {}
 
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?BackedEnum
+	/**
+	 * @throws CodecException
+	 */
+	public function encode(mixed $value, PropertyMetadata $metadata): int|string|null
 	{
-		$type = $property->type;
-		if (!$type || !is_subclass_of($type, BackedEnum::class)) {
-			return null;
+		if ($value !== null && !$value instanceof $this->class) {
+			throw new CodecException(sprintf('%s::$%s expects %s, %s given.', $metadata->class, $metadata->name, $this->class, get_debug_type($value)));
 		}
 
-		$value = $explorer[$property->index]->value;
+		/** @var ?BackedEnum $value */
+		return $value?->value;
+	}
 
-		/** @var class-string<BackedEnum> $type */
-		return $value ? $type::tryFrom($value) : null;
+	/**
+	 * @throws CodecException
+	 * @throws ValueError
+	 * @throws TypeError
+	 */
+	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?BackedEnum
+	{
+		$value = $explorer[$metadata->index]->value;
+
+		return $value !== null ? $this->class::from($value) : null;
 	}
 
 }

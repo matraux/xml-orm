@@ -2,27 +2,38 @@
 
 namespace Matraux\XmlOrm\Codec;
 
+use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\XmlOrm\Entity\Entity;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 
-final class EntityCodec implements Codec
+final readonly class EntityCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): ?Entity
-	{
-		return $value instanceof Entity ? $value : null;
-	}
+	/**
+	 * @param class-string<Entity> $class
+	 */
+	public function __construct(protected string $class) {}
 
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?Entity
+	/**
+	 * @throws CodecException
+	 */
+	public function encode(mixed $value, PropertyMetadata $metadata): ?Entity
 	{
-		$type = $property->type;
-		if (!$type || !is_subclass_of($type, Entity::class)) {
-			return null;
+		if ($value !== null && !$value instanceof $this->class) {
+			throw new CodecException(sprintf('%s::$%s expects %s, %s given.', $metadata->class, $metadata->name, $this->class, get_debug_type($value)));
 		}
 
-		/** @var class-string<Entity> $type */
-		return $type::fromExplorer($explorer->withNamespace($property->namespace)->withIndex($property->index));
+		/** @var ?Entity $value */
+		return $value;
+	}
+
+
+	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?Entity
+	{
+		$value = $explorer[$metadata->index]->value;
+
+		return $value !== null ? $this->class::fromExplorer($explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)) : null;
 	}
 
 }
