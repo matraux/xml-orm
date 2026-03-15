@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest\assets;
+namespace Matraux\XmlOrm\Test\assets;
 
 $data = '<?xml version="1.0" encoding="utf-8"?>';
 

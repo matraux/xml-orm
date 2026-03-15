@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest\Dto\Entity;
+namespace Matraux\XmlOrm\Test\Dto\Entity;
 
 use Matraux\XmlOrm\Entity\Entity;
 use Matraux\XmlOrm\Xml\XmlAttribute;
 use Matraux\XmlOrm\Xml\XmlElement;
-use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
-use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
+use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 
 #[GeneralXmlNamespace]
 #[XmlElement('main')]

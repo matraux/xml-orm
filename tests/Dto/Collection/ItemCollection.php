@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest\Dto\Collection;
+namespace Matraux\XmlOrm\Test\Dto\Collection;
 
 use Matraux\XmlOrm\Collection\Collection;
-use Matraux\XmlOrmTest\Dto\Entity\ItemEntity;
+use Matraux\XmlOrm\Test\Dto\Entity\ItemEntity;
 
 /**
  * @extends Collection<ItemEntity>

@@ -1,17 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest;
+namespace Matraux\XmlOrm\Test;
 
+use Codeception\Configuration;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
-use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
-use Matraux\XmlOrmTest\Dto\Entity\DataEntity;
-use Matraux\XmlOrmTest\Dto\Entity\Enum\Active;
-use Matraux\XmlOrmTest\Dto\Entity\MainEntity;
-use Matraux\XmlOrmTest\Dto\Entity\ResponseEntity;
-use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrmTest\FileSystem\Folder;
-use Matraux\XmlOrmTest\Support\UnitTester;
+use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
+use Matraux\XmlOrm\Test\Dto\Entity\DataEntity;
+use Matraux\XmlOrm\Test\Dto\Entity\Enum\Active;
+use Matraux\XmlOrm\Test\Dto\Entity\MainEntity;
+use Matraux\XmlOrm\Test\Dto\Entity\ResponseEntity;
+use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Test\FileSystem\Folder;
+use Matraux\XmlOrm\Test\Support\UnitTester;
 
 final class EntityCest
 {
@@ -47,12 +48,13 @@ final class EntityCest
 		$items->createEntity()->id = 1;
 		$items->createEntity()->id = 2;
 
-		$tester->assertStringEqualsFile(Folder::create()->data . 'match.xml', (string) $response);
+		$tester->assertStringEqualsFile(Configuration::dataDir() . 'match.xml', (string) $response);
 	}
 
 	protected static function createExplorer(): Explorer
 	{
-		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
+
+		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.xml')
 			->withNamespace(new GeneralXmlNamespace())
 			->withIndex('data');
 	}

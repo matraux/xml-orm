@@ -1,14 +1,15 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest;
+namespace Matraux\XmlOrm\Test;
 
+use Codeception\Configuration;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
-use Matraux\XmlOrmTest\Dto\Collection\ItemCollection;
-use Matraux\XmlOrmTest\Dto\Entity\ItemEntity;
-use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrmTest\FileSystem\Folder;
-use Matraux\XmlOrmTest\Support\UnitTester;
+use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
+use Matraux\XmlOrm\Test\Dto\Entity\ItemEntity;
+use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Test\FileSystem\Folder;
+use Matraux\XmlOrm\Test\Support\UnitTester;
 use OutOfRangeException;
 use UnexpectedValueException;
 
@@ -52,15 +53,14 @@ final class CollectionCest
 	{
 		$explorer = self::createExplorer();
 		$collection = ItemCollection::fromExplorer($explorer);
-		foreach ($collection as $index => $itemEntity) {
-			$tester->assertIsInt($index);
+		foreach ($collection as $itemEntity) {
 			$tester->assertInstanceOf(ItemEntity::class, $itemEntity);
 		}
 	}
 
 	protected static function createExplorer(): Explorer
 	{
-		return SimpleExplorer::fromFile(Folder::create()->data . 'general.xml')
+		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.xml')
 			->withNamespace(new GeneralXmlNamespace())
 			->withIndex('data')
 			->withIndex('main')

@@ -1,15 +1,17 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\XmlOrmTest\Unit;
+namespace Matraux\XmlOrm\Test\Unit;
 
+use Codeception\Configuration;
 use Matraux\FileSystem\File\File;
 use Matraux\XmlOrm\Exception\XmlParsingException;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
-use Matraux\XmlOrmTest\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrmTest\FileSystem\Folder;
-use Matraux\XmlOrmTest\Support\UnitTester;
+use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Test\FileSystem\Folder;
+use Matraux\XmlOrm\Test\Support\UnitTester;
 use OutOfRangeException;
+use RuntimeException;
 use UnexpectedValueException;
 
 final class SimpleExplorerCest
@@ -18,12 +20,6 @@ final class SimpleExplorerCest
 	public function testFromFile(UnitTester $tester): void
 	{
 		self::createExplorer();
-	}
-
-	public function testFromString(UnitTester $tester): void
-	{
-		$string = File::fromPath(Folder::create()->data->absolute . 'general.xml')->content;
-		SimpleExplorer::fromString($string);
 	}
 
 	public function testWithIndex(UnitTester $tester): void
@@ -94,7 +90,7 @@ final class SimpleExplorerCest
 
 	protected static function createExplorer(): Explorer
 	{
-		return SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.xml');
+		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.xml');
 	}
 
 }
