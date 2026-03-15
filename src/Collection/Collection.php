@@ -27,7 +27,7 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 	/** @var int<0,max> */
 	final protected int $countCache;
 
-	final protected function __construct(protected ?Explorer $explorer = null)
+	final protected function __construct(protected readonly ?Explorer $explorer = null)
 	{
 	}
 
@@ -111,13 +111,11 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 	public function getIterator(): Traversable
 	{
 		if ($this->explorer) {
-			foreach ($this->explorer as $index => $data) {
-				yield (int) $index => static::getEntityClass()::fromExplorer($data);
+			foreach ($this->explorer as $index => $explorer) {
+				yield (int) $index => static::getEntityClass()::fromExplorer($explorer);
 			}
 		} else {
-			foreach ($this->entities as $index => $entity) {
-				yield $index => $entity;
-			}
+			yield from $this->entities;
 		}
 	}
 
