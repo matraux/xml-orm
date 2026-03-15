@@ -6,7 +6,6 @@ use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 use LogicException;
-use Traversable;
 
 /**
  * @implements IteratorAggregate<int|string,static>
@@ -20,21 +19,11 @@ abstract class Explorer implements IteratorAggregate, Countable, ArrayAccess
 		get;
 	}
 
-	/**
-	 * @return Traversable<int|string,static>
-	 */
-	abstract public function getIterator(): Traversable;
-
 	abstract public function withIndex(string $index): static;
 
 	abstract public function withNamespace(?XmlNamespace $namespace): static;
 
 	abstract public function attribute(string $name): ?string;
-
-	/**
-	 * @return int<0,max>
-	 */
-	abstract public function count(): int;
 
 	abstract public function offsetExists(mixed $offset): bool;
 
