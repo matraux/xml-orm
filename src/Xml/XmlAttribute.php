@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Xml;
 
@@ -7,9 +7,6 @@ use Attribute;
 #[Attribute]
 final readonly class XmlAttribute
 {
-
-	public function __construct(public string $name)
-	{
-	}
+	public function __construct(public string $name) {}
 
 }

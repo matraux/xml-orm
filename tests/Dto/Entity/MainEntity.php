@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
@@ -12,7 +12,6 @@ use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 #[XmlElement('main')]
 final class MainEntity extends Entity
 {
-
 	#[GeneralXmlNamespace]
 	#[XmlElement('customName')]
 	public string $name;
@@ -30,5 +29,4 @@ final class MainEntity extends Entity
 	#[GeneralXmlNamespace]
 	#[XmlElement('item')]
 	public ItemCollection $items;
-
 }

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Metadata;
 
@@ -10,7 +10,6 @@ use ReflectionClass;
 
 final readonly class EntityMetadata
 {
-
 	public string $name;
 
 	public ?XmlNamespace $namespace;
@@ -32,12 +31,11 @@ final readonly class EntityMetadata
 		$properties = [];
 		foreach ($reflection->getProperties() as $property) {
 			$properties[] = new ReflectionClass(PropertyMetadata::class)
-				->newLazyGhost(function(PropertyMetadata $propertyMetadata) use($property): void {
+				->newLazyGhost(function (PropertyMetadata $propertyMetadata) use ($property): void {
 					$propertyMetadata->__construct($property);
 				});
 		}
 
 		$this->properties = $properties;
 	}
-
 }

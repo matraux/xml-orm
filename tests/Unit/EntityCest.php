@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test;
 
@@ -11,12 +11,10 @@ use Matraux\XmlOrm\Test\Dto\Entity\Enum\Active;
 use Matraux\XmlOrm\Test\Dto\Entity\MainEntity;
 use Matraux\XmlOrm\Test\Dto\Entity\ResponseEntity;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrm\Test\FileSystem\Folder;
 use Matraux\XmlOrm\Test\Support\UnitTester;
 
 final class EntityCest
 {
-
 	public function testCreate(UnitTester $tester): void
 	{
 		$explorer = self::createExplorer();
@@ -58,5 +56,4 @@ final class EntityCest
 			->withNamespace(new GeneralXmlNamespace())
 			->withIndex('data');
 	}
-
 }

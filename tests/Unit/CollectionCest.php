@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test;
 
@@ -8,14 +8,12 @@ use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
 use Matraux\XmlOrm\Test\Dto\Entity\ItemEntity;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrm\Test\FileSystem\Folder;
 use Matraux\XmlOrm\Test\Support\UnitTester;
 use OutOfRangeException;
 use UnexpectedValueException;
 
 final class CollectionCest
 {
-
 	public function testCreate(UnitTester $tester): void
 	{
 		$explorer = self::createExplorer();
@@ -44,9 +42,9 @@ final class CollectionCest
 
 		$tester->assertInstanceOf(ItemEntity::class, $collection[0]);
 
-		$tester->expectThrowable(UnexpectedValueException::class, fn (): mixed => $collection[-1]);
+		$tester->expectThrowable(UnexpectedValueException::class, fn(): mixed => $collection[-1]);
 
-		$tester->expectThrowable(OutOfRangeException::class, fn (): mixed => $collection[20000]);
+		$tester->expectThrowable(OutOfRangeException::class, fn(): mixed => $collection[20000]);
 	}
 
 	public function testIterator(UnitTester $tester): void
@@ -66,5 +64,4 @@ final class CollectionCest
 			->withIndex('main')
 			->withIndex('item');
 	}
-
 }

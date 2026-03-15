@@ -1,10 +1,7 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Exception;
 
 use RuntimeException;
 
-final class XmlParsingException extends RuntimeException
-{
-
-}
+final class XmlParsingException extends RuntimeException {}

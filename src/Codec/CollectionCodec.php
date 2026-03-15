@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Codec;
 
@@ -10,7 +10,6 @@ use Matraux\XmlOrm\Xml\Explorer;
 
 final readonly class CollectionCodec implements Codec
 {
-
 	/**
 	 * @param class-string<Collection<Entity>> $class
 	 */
@@ -39,5 +38,4 @@ final readonly class CollectionCodec implements Codec
 
 		return $value !== null ? $this->class::fromExplorer($explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)) : null;
 	}
-
 }

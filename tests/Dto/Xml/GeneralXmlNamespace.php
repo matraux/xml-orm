@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test\Dto\Xml;
 
@@ -8,7 +8,6 @@ use Matraux\XmlOrm\Xml\XmlNamespace;
 #[Attribute]
 final class GeneralXmlNamespace extends XmlNamespace
 {
-
 	public static function getName(): string
 	{
 		return 'gen';
@@ -18,5 +17,4 @@ final class GeneralXmlNamespace extends XmlNamespace
 	{
 		return 'http://www.w3.org/2001/XMLSchema';
 	}
-
 }

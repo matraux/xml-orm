@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
@@ -11,7 +11,6 @@ use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 #[XmlElement('item')]
 final class ItemEntity extends Entity
 {
-
 	#[GeneralXmlNamespace]
 	#[XmlElement('ID')]
 	public int $id;
@@ -31,5 +30,4 @@ final class ItemEntity extends Entity
 	#[GeneralXmlNamespace]
 	#[XmlElement('hash')]
 	public string $hash;
-
 }

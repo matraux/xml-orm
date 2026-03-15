@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Entity;
 
@@ -13,16 +13,13 @@ use Stringable;
 
 abstract class Entity implements Stringable
 {
-
 	protected const string Encoding = 'utf-8';
 
-	final protected function __construct()
-	{
-	}
+	final protected function __construct() {}
 
-	final static function fromExplorer(Explorer $explorer): static
+	final public static function fromExplorer(Explorer $explorer): static
 	{
-		return new ReflectionClass(static::class)->newLazyGhost(function(self $entity) use($explorer): void {
+		return new ReflectionClass(static::class)->newLazyGhost(function (self $entity) use ($explorer): void {
 			$entityMetadata = EntityMetadataFactory::create(static::class);
 			foreach ($entityMetadata->properties as $property) {
 				if ($property->attribute) {
@@ -35,9 +32,9 @@ abstract class Entity implements Stringable
 					continue;
 				}
 
-				$entity->{$property->name} = $property->codec ?
-					$property->codec->decode($explorer, $property) :
-					$explorer->withNamespace($property->namespace)->withIndex($property->index)->value;
+				$entity->{$property->name} = $property->codec
+					? $property->codec->decode($explorer, $property)
+					: $explorer->withNamespace($property->namespace)->withIndex($property->index)->value;
 			}
 		});
 	}
@@ -124,5 +121,4 @@ abstract class Entity implements Stringable
 	{
 		return $this->asXml();
 	}
-
 }

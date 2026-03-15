@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Codec;
 
@@ -11,7 +11,6 @@ use ValueError;
 
 final readonly class BackedEnumCodec implements Codec
 {
-
 	/**
 	 * @param class-string<BackedEnum> $class
 	 */
@@ -41,5 +40,4 @@ final readonly class BackedEnumCodec implements Codec
 
 		return $value !== null ? $this->class::from($value) : null;
 	}
-
 }

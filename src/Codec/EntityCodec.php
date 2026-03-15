@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Codec;
 
@@ -9,7 +9,6 @@ use Matraux\XmlOrm\Xml\Explorer;
 
 final readonly class EntityCodec implements Codec
 {
-
 	/**
 	 * @param class-string<Entity> $class
 	 */
@@ -28,12 +27,10 @@ final readonly class EntityCodec implements Codec
 		return $value;
 	}
 
-
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?Entity
 	{
 		$value = $explorer[$metadata->index]->value;
 
 		return $value !== null ? $this->class::fromExplorer($explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)) : null;
 	}
-
 }

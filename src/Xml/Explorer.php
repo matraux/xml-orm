@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Xml;
 
@@ -13,9 +13,7 @@ use LogicException;
  */
 abstract class Explorer implements IteratorAggregate, Countable, ArrayAccess
 {
-
-	abstract public ?string $value
-	{
+	abstract public ?string $value {
 		get;
 	}
 
@@ -36,5 +34,4 @@ abstract class Explorer implements IteratorAggregate, Countable, ArrayAccess
 	{
 		throw new LogicException('Explorer is read-only.');
 	}
-
 }

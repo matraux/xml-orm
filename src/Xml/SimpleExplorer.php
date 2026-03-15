@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Xml;
 
@@ -10,18 +10,14 @@ use UnexpectedValueException;
 
 final class SimpleExplorer extends Explorer
 {
-
-	public ?string $value
-	{
+	public ?string $value {
 		get => (string) $this->xml;
 	}
 
 	/** @var int<0,max> */
 	protected int $countCache;
 
-	protected function __construct(protected SimpleXMLElement $xml, protected ?XmlNamespace $namespace = null)
-	{
-	}
+	protected function __construct(protected SimpleXMLElement $xml, protected ?XmlNamespace $namespace = null) {}
 
 	public static function fromFile(string $file): static
 	{
@@ -67,9 +63,9 @@ final class SimpleExplorer extends Explorer
 			throw new UnexpectedValueException(sprintf('Expected offset value "positive-int", "%s" given.', $offset));
 		}
 
-		return is_int($offset) ?
-			isset($this->xml[$offset]) :
-			isset($this->xml->children($this->namespace?->getSource())->{$offset});
+		return is_int($offset)
+			? isset($this->xml[$offset])
+			: isset($this->xml->children($this->namespace?->getSource())->{$offset});
 	}
 
 	public function offsetGet(mixed $offset): static
@@ -117,5 +113,4 @@ final class SimpleExplorer extends Explorer
 
 		return new static($children, $this->namespace);
 	}
-
 }

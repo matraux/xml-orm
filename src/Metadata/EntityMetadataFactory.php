@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Metadata;
 
@@ -7,7 +7,6 @@ use ReflectionClass;
 
 final class EntityMetadataFactory
 {
-
 	/** @var array<class-string<Entity>,EntityMetadata> */
 	protected static array $cache;
 
@@ -17,9 +16,8 @@ final class EntityMetadataFactory
 	public static function create(string $entityClass): EntityMetadata
 	{
 		return self::$cache[$entityClass] ??= new ReflectionClass(EntityMetadata::class)
-			->newLazyGhost(function(EntityMetadata $metadata) use($entityClass): void {
+			->newLazyGhost(function (EntityMetadata $metadata) use ($entityClass): void {
 				$metadata->__construct(new ReflectionClass($entityClass));
 			});
 	}
-
 }

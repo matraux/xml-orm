@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
@@ -10,9 +10,7 @@ use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 #[XmlElement('response')]
 final class ResponseEntity extends Entity
 {
-
 	#[GeneralXmlNamespace]
 	#[XmlElement('data')]
 	public DataEntity $data;
-
 }

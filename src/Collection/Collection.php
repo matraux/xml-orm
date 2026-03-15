@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Collection;
 
@@ -20,16 +20,13 @@ use UnexpectedValueException;
  */
 abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
-
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
 	/** @var int<0,max> */
 	final protected int $countCache;
 
-	final protected function __construct(protected readonly ?Explorer $explorer = null)
-	{
-	}
+	final protected function __construct(protected readonly ?Explorer $explorer = null) {}
 
 	final public static function create(): static
 	{
@@ -140,5 +137,4 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 			throw new ReadonlyAccessException('Collection is readonly.');
 		}
 	}
-
 }

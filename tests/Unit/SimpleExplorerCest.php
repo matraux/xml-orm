@@ -1,22 +1,18 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Test\Unit;
 
 use Codeception\Configuration;
-use Matraux\FileSystem\File\File;
 use Matraux\XmlOrm\Exception\XmlParsingException;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
-use Matraux\XmlOrm\Test\FileSystem\Folder;
 use Matraux\XmlOrm\Test\Support\UnitTester;
 use OutOfRangeException;
-use RuntimeException;
 use UnexpectedValueException;
 
 final class SimpleExplorerCest
 {
-
 	public function testFromFile(UnitTester $tester): void
 	{
 		self::createExplorer();
@@ -65,13 +61,13 @@ final class SimpleExplorerCest
 			->withIndex('main')
 			->withIndex('item');
 
-		$tester->expectThrowable(OutOfRangeException::class, fn (): mixed => $explorer['notExists']);
+		$tester->expectThrowable(OutOfRangeException::class, fn(): mixed => $explorer['notExists']);
 
-		$tester->expectThrowable(UnexpectedValueException::class, fn (): mixed => $explorer[-1]);
+		$tester->expectThrowable(UnexpectedValueException::class, fn(): mixed => $explorer[-1]);
 
 		$tester->assertTrue(isset($explorer[0]));
 
-		$tester->expectThrowable(OutOfRangeException::class, fn (): mixed => $explorer[20000]);
+		$tester->expectThrowable(OutOfRangeException::class, fn(): mixed => $explorer[20000]);
 
 		$tester->assertInstanceOf(SimpleExplorer::class, $explorer[0]);
 	}
@@ -92,5 +88,4 @@ final class SimpleExplorerCest
 	{
 		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.xml');
 	}
-
 }

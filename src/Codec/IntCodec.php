@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Codec;
 
@@ -8,7 +8,6 @@ use Matraux\XmlOrm\Xml\Explorer;
 
 final readonly class IntCodec implements Codec
 {
-
 	/**
 	 * @throws CodecException
 	 */
@@ -21,12 +20,10 @@ final readonly class IntCodec implements Codec
 		return $value;
 	}
 
-
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?int
 	{
 		$value = $explorer[$metadata->index]->value;
 
 		return filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 	}
-
 }

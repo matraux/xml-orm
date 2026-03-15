@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\XmlOrm\Metadata;
 
@@ -24,7 +24,6 @@ use RuntimeException;
 
 final readonly class PropertyMetadata
 {
-
 	public string $name;
 
 	public string $class;
@@ -45,6 +44,11 @@ final readonly class PropertyMetadata
 		$this->index = $this->resolveIndex();
 		$this->namespace = $this->resolveNamespace();
 		$this->codec = $this->resolveCodec();
+	}
+
+	public function isInitialized(Entity $entity): bool
+	{
+		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
 	protected function resolveNamespace(): ?XmlNamespace
@@ -109,10 +113,4 @@ final readonly class PropertyMetadata
 			default => null,
 		};
 	}
-
-	public function isInitialized(Entity $entity): bool
-	{
-		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
-	}
-
 }
