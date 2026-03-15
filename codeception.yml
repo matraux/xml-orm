@@ -1,4 +1,4 @@
-namespace: Matraux\XmlOrmTest
+namespace: Matraux\XmlOrm\Test
 support_namespace: Support
 
 paths:
