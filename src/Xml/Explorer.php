@@ -25,8 +25,6 @@ abstract class Explorer implements IteratorAggregate, Countable, ArrayAccess
 
 	abstract public function attribute(string $name): ?string;
 
-	abstract public function offsetExists(mixed $offset): bool;
-
 	abstract public function offsetGet(mixed $offset): static;
 
 	final public function offsetSet(mixed $offset, mixed $value): void
