@@ -16,7 +16,10 @@ final class EntityMetadataFactory
 	 */
 	public static function create(string $entityClass): EntityMetadata
 	{
-		return self::$cache[$entityClass] ??= EntityMetadata::create(new ReflectionClass($entityClass));
+		return self::$cache[$entityClass] ??= new ReflectionClass(EntityMetadata::class)
+			->newLazyGhost(function(EntityMetadata $metadata) use($entityClass): void {
+				$metadata->__construct(new ReflectionClass($entityClass));
+			});
 	}
 
 }

@@ -21,7 +21,7 @@ final readonly class EntityMetadata
 	/**
 	 * @param ReflectionClass<Entity> $reflection
 	 */
-	protected function __construct(ReflectionClass $reflection)
+	public function __construct(ReflectionClass $reflection)
 	{
 		$attributes = $reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
 		$this->name = array_shift($attributes)?->newInstance()->name ?? $reflection->name;
@@ -31,18 +31,13 @@ final readonly class EntityMetadata
 
 		$properties = [];
 		foreach ($reflection->getProperties() as $property) {
-			$properties[] = PropertyMetadata::create($property);
+			$properties[] = new ReflectionClass(PropertyMetadata::class)
+				->newLazyGhost(function(PropertyMetadata $propertyMetadata) use($property): void {
+					$propertyMetadata->__construct($property);
+				});
 		}
 
 		$this->properties = $properties;
-	}
-
-	/**
-	 * @param ReflectionClass<Entity> $reflection
-	 */
-	public static function create(ReflectionClass $reflection): static
-	{
-		return new static($reflection);
 	}
 
 }
