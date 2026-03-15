@@ -7,6 +7,7 @@ use DOMNode;
 use Matraux\XmlOrm\Collection\Collection;
 use Matraux\XmlOrm\Metadata\EntityMetadataFactory;
 use Matraux\XmlOrm\Xml\Explorer;
+use ReflectionClass;
 use RuntimeException;
 use Stringable;
 
@@ -21,30 +22,24 @@ abstract class Entity implements Stringable
 
 	final static function fromExplorer(Explorer $explorer): static
 	{
-		$entity = new static();
+		return new ReflectionClass(static::class)->newLazyGhost(function(self $entity) use($explorer): void {
+			$entityMetadata = EntityMetadataFactory::create(static::class);
+			foreach ($entityMetadata->properties as $property) {
+				if ($property->attribute) {
+					$entity->{$property->name} = $explorer->attribute($property->attribute);
 
-		$entityMetadata = EntityMetadataFactory::create(static::class);
-		foreach ($entityMetadata->properties as $property) {
-			if ($property->attribute) {
-				$entity->{$property->name} = $explorer->attribute($property->attribute);
+					continue;
+				}
 
-				continue;
+				if (!$explorer->withNamespace($property->namespace)->offsetExists($property->index)) {
+					continue;
+				}
+
+				$entity->{$property->name} = $property->codec ?
+					$property->codec->decode($explorer, $property) :
+					$explorer->withNamespace($property->namespace)->withIndex($property->index)->value;
 			}
-
-			if (!isset($explorer->withNamespace($property->namespace)[$property->index])) {
-				continue;
-			}
-
-			if ($property->codec) {
-				$entity->{$property->name} = $property->codec->decode($explorer, $property);
-
-				continue;
-			}
-
-			$entity->{$property->name} = $explorer->withNamespace($property->namespace)->withIndex($property->index)->value;
-		}
-
-		return $entity;
+		});
 	}
 
 	final public static function create(): static
@@ -57,7 +52,6 @@ abstract class Entity implements Stringable
 	 */
 	public function asXml(?DOMNode $document = null): string
 	{
-		// phpcs:ignore
 		$document ??= new DOMDocument('1.0', static::Encoding);
 
 		$entityMetadata = EntityMetadataFactory::create(static::class);
