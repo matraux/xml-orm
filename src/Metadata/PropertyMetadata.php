@@ -40,9 +40,9 @@ final readonly class PropertyMetadata
 	{
 		$this->name = $this->reflection->name;
 		$this->class = $this->reflection->class;
-		$this->attribute = $this->resolveAttribute();
-		$this->index = $this->resolveIndex();
-		$this->namespace = $this->resolveNamespace();
+		$this->attribute = $this->resolveAttribute(XmlAttribute::class)?->name;
+		$this->index = $this->resolveAttribute(XmlElement::class)->name ?? $this->reflection->name;
+		$this->namespace = $this->resolveAttribute(XmlNamespace::class);
 		$this->codec = $this->resolveCodec();
 	}
 
@@ -51,34 +51,19 @@ final readonly class PropertyMetadata
 		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
-	protected function resolveNamespace(): ?XmlNamespace
+	/**
+	 * @template T of object
+	 * @param class-string<T> $class
+	 * @return null|T
+	 */
+	protected function resolveAttribute(string $class): ?object
 	{
-		$attributes = $this->reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
+		$attributes = $this->reflection->getAttributes($class, ReflectionAttribute::IS_INSTANCEOF);
 		if (count($attributes) > 1) {
-			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, XmlNamespace::class));
+			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, $class));
 		}
 
 		return array_shift($attributes)?->newInstance();
-	}
-
-	protected function resolveAttribute(): ?string
-	{
-		$attributes = $this->reflection->getAttributes(XmlAttribute::class, ReflectionAttribute::IS_INSTANCEOF);
-		if (count($attributes) > 1) {
-			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, XmlAttribute::class));
-		}
-
-		return array_shift($attributes)?->newInstance()->name;
-	}
-
-	protected function resolveIndex(): string
-	{
-		$attributes = $this->reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
-		if (count($attributes) > 1) {
-			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, XmlElement::class));
-		}
-
-		return array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
 	}
 
 	protected function resolveCodec(): ?Codec
