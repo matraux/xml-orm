@@ -46,10 +46,9 @@ final readonly class EntityMetadata
 	{
 		$attributes = $this->reflection->getAttributes($class, ReflectionAttribute::IS_INSTANCEOF);
 		if (count($attributes) > 1) {
-			throw new RuntimeException(sprintf('%s expects single %s attribute, multiple given.', $this->reflection->class, $class));
+			throw new RuntimeException(sprintf('%s expects single %s attribute, multiple given.', $this->reflection->name, $class));
 		}
 
 		return array_shift($attributes)?->newInstance();
 	}
-
 }
