@@ -3,7 +3,7 @@
 namespace Matraux\XmlOrm\Codec;
 
 use BackedEnum;
-use Matraux\JsonOrm\Exception\CodecException;
+use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 use TypeError;

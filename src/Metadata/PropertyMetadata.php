@@ -3,7 +3,7 @@
 namespace Matraux\XmlOrm\Metadata;
 
 use BackedEnum;
-use Matraux\JsonOrm\Exception\CodecException;
+use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Codec\BackedEnumCodec;
 use Matraux\XmlOrm\Codec\BoolCodec;
 use Matraux\XmlOrm\Codec\Codec;
@@ -94,7 +94,7 @@ final readonly class PropertyMetadata
 			is_subclass_of($type, BackedEnum::class) => new BackedEnumCodec($type),
 			$type === 'int' => new IntCodec(),
 			$type === 'float' => new FloatCodec(),
-			$type === 'null' => new BoolCodec(),
+			$type === 'bool' => new BoolCodec(),
 			default => null,
 		};
 	}

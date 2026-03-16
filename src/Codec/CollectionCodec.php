@@ -2,7 +2,7 @@
 
 namespace Matraux\XmlOrm\Codec;
 
-use Matraux\JsonOrm\Exception\CodecException;
+use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Collection\Collection;
 use Matraux\XmlOrm\Entity\Entity;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
