@@ -38,6 +38,7 @@ final class EntityCest
 		$tester->assertEquals('Some custom surname', $entity->main->surname);
 		$tester->assertEquals('Custom note', $entity->main->note);
 		$tester->assertEquals('1.3.1', $entity->main->version);
+		$tester->assertEquals('local', $entity->main->target);
 	}
 
 	public function testAsXml(UnitTester $tester): void
@@ -45,9 +46,16 @@ final class EntityCest
 		$response = ResponseEntity::create();
 		$data = $response->data = DataEntity::create();
 		$main = $data->main = MainEntity::create();
+		$main->version = '1.3.1';
+		$main->target = 'local';
 		$items = $main->items = ItemCollection::create();
-		$items->createEntity()->id = 1;
-		$items->createEntity()->id = 2;
+		$item = $items->createEntity();
+		$item->id = 1;
+		$item->created = new DateTime('16.03.2026 00:00:01');
+		$item = $items->createEntity();
+		$item->id = 2;
+		$item->created = new DateTime('16.03.2026 00:00:02');
+
 
 		$tester->assertStringEqualsFile(Configuration::dataDir() . 'match.xml', (string) $response);
 	}

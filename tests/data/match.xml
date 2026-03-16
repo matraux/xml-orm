@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gen:response xmlns:gen="http://www.w3.org/2001/XMLSchema"><gen:data><gen:main><gen:item><gen:ID>1</gen:ID></gen:item><gen:item><gen:ID>2</gen:ID></gen:item></gen:main></gen:data></gen:response>
+<gen:response xmlns:gen="http://www.w3.org/2001/XMLSchema"><gen:data><gen:main program-version="1.3.1" gen:target="local"><gen:item><gen:ID>1</gen:ID><created>16.03.2026 00:00:01</created></gen:item><gen:item><gen:ID>2</gen:ID><created>16.03.2026 00:00:02</created></gen:item></gen:main></gen:data></gen:response>

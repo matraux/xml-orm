@@ -79,9 +79,10 @@ final class SimpleExplorerCest
 			->withIndex('data')
 			->withIndex('main');
 
-		$tester->assertEquals('1.3.1', $explorer->attribute('program-version'));
-		$tester->assertEquals('Custom note', $explorer->attribute('custom-note'));
-		$tester->assertEquals(null, $explorer->attribute('notExists'));
+		$tester->assertEquals('1.3.1', $explorer->withNamespace(null)->attribute('program-version'));
+		$tester->assertEquals('Custom note', $explorer->withNamespace(null)->attribute('custom-note'));
+		$tester->assertEquals(null, $explorer->withNamespace(null)->attribute('notExists'));
+		$tester->assertEquals('local', $explorer->attribute('target'));
 	}
 
 	protected static function createExplorer(): Explorer

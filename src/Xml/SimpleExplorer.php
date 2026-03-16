@@ -86,7 +86,7 @@ final class SimpleExplorer extends Explorer
 
 	public function attribute(string $name): ?string
 	{
-		$attribute = $this->xml->attributes()->{$name};
+		$attribute = $this->xml->attributes($this->namespace?->getSource())->{$name};
 
 		return $attribute instanceof SimpleXMLElement ? (string) $attribute : null;
 	}

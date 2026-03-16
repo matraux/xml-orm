@@ -27,6 +27,10 @@ final class MainEntity extends Entity
 	public string $note;
 
 	#[GeneralXmlNamespace]
+	#[XmlAttribute('target')]
+	public string $target;
+
+	#[GeneralXmlNamespace]
 	#[XmlElement('item')]
 	public ItemCollection $items;
 }

@@ -8,7 +8,7 @@ $data .= '
 <gen:response xmlns:gen="http://www.w3.org/2001/XMLSchema">
 	<noNS>No namespace</noNS>
 	<gen:data>
-		<gen:main program-version="1.3.1" custom-note="Custom note">
+		<gen:main program-version="1.3.1" custom-note="Custom note" gen:target="local">
 			<gen:customName>Some custom name</gen:customName>
 			<gen:customSurname>Some custom surname</gen:customSurname>
 ';

@@ -23,7 +23,7 @@ abstract class Entity implements Stringable
 			$entityMetadata = MetadataFactory::create(static::class);
 			foreach ($entityMetadata->properties as $property) {
 				if ($property->attribute) {
-					$entity->{$property->name} = $explorer->attribute($property->attribute);
+					$entity->{$property->name} = $explorer->withNamespace($property->namespace)->attribute($property->attribute);
 
 					continue;
 				}
@@ -86,24 +86,28 @@ abstract class Entity implements Stringable
 					$entity->asXml($element);
 				}
 			} elseif (is_scalar($value) || $value === null) {
-
 				if ($property->attribute) {
-					$element->setAttribute($property->attribute, (string) $value);
+					$name = $property->attribute;
 
-					continue;
-				}
+					if ($xmlns = $property->namespace) {
+						$name = $xmlns->getName() . ':' . $name;
+						$owner->documentElement?->setAttribute('xmlns:' . $xmlns->getName(), $xmlns->getSource());
+					}
 
-				$name = $property->index;
+					$element->setAttribute($name, (string) $value);
+				} else {
+					$name = $property->index;
 
-				if ($xmlns = $property->namespace) {
-					$name = $xmlns->getName() . ':' . $name;
-					$owner->documentElement?->setAttribute('xmlns:' . $xmlns->getName(), $xmlns->getSource());
-				}
+					if ($xmlns = $property->namespace) {
+						$name = $xmlns->getName() . ':' . $name;
+						$owner->documentElement?->setAttribute('xmlns:' . $xmlns->getName(), $xmlns->getSource());
+					}
 
-				$elementProperty = $owner->createElement($name, (string) $value);
+					$elementProperty = $owner->createElement($name, (string) $value);
 
-				if ($value !== null) {
-					$element->appendChild($elementProperty);
+					if ($value !== null) {
+						$element->appendChild($elementProperty);
+					}
 				}
 			}
 		}
