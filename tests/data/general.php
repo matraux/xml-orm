@@ -20,6 +20,7 @@ for ($n = 1; $n <= 20000; $n++) {
 				<gen:Active>' . ($n % 3 === 0 ? 'true' : 'false') . '</gen:Active>
 				<gen:md5>' . md5((string) $n) . '</gen:md5> <!-- md5 od ID -->
 				<gen:hash>' . base64_encode(md5((string) $n)) . '</gen:hash> <!-- base64 encoded md5 -->
+				<created>' . date('d.m.Y H:i:s', strtotime('16.03.2026') + $n ) . '</created>
 			</gen:item>
 	';
 }

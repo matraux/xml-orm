@@ -2,10 +2,12 @@
 
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
+use DateTime;
 use Matraux\XmlOrm\Entity\Entity;
-use Matraux\XmlOrm\Xml\XmlElement;
-use Matraux\XmlOrm\Test\Dto\Entity\Enum\Active;
+use Matraux\XmlOrm\Test\Dto\Codec\DateTimeCodec;
+use Matraux\XmlOrm\Test\Dto\Enum\Active;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Xml\XmlElement;
 
 #[GeneralXmlNamespace]
 #[XmlElement('item')]
@@ -30,4 +32,8 @@ final class ItemEntity extends Entity
 	#[GeneralXmlNamespace]
 	#[XmlElement('hash')]
 	public string $hash;
+
+	#[XmlElement('created')]
+	#[DateTimeCodec]
+	public DateTime $created;
 }
