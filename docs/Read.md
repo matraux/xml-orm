@@ -25,9 +25,9 @@
 
 ## Entity read
 ```php
-use Matraux\XmlOrm\Xml\SimpleXmlExplorer;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
 
-$explorer = SimpleXmlExplorer::fromString($xml);
+$explorer = SimpleExplorer::fromString($xml);
 $main = MainEntity::fromExplorer($explorer); // Tell explorer where to start --> $explorer->withIndex('main', new GeneralXmlNamespace())
 
 echo $main->id; // (int) 1000

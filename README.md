@@ -39,14 +39,11 @@ composer require matraux/xml-orm
 <br>
 
 ## Requirements
-| version | PHP | Note
-|----|---|---
-| 1.0.1 | 8.2+ | Initial commit
-| 1.4.1 | 8.3+ | Parsing via PHP attributes
-| 1.5.0 | 8.4+ | Performance optimization, metadata caching
-| 1.6.0 | 8.4+ | Enum support, security hardening, doc fixes
-| 1.6.1 | 8.4+ | Optimized metadata
-| 2.0.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
+| version | PHP | Note |
+|---|---|---|
+| 1.0.0 | 7.4+ | Support PHP 7.4 |
+| 1.0.0 | 8.3+ | Support PHP 8.3 |
+| 1.0.0 | 8.4+ | Support PHP 8.4 |
 
 <br>
 
@@ -55,9 +52,9 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\XmlORM\Xml\SimpleXmlExplorer;
+use Matraux\XmlORM\Xml\SimpleExplorer;
 
-$explorer = SimpleXmlExplorer::fromString($xml);
+$explorer = SimpleExplorer::fromString($xml);
 $main = MainEntity::fromExplorer($explorer);
 echo $main->name;
 ```
