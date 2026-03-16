@@ -36,7 +36,7 @@ final readonly class BackedEnumCodec implements Codec
 	 */
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?BackedEnum
 	{
-		$value = $explorer[$metadata->index]->value;
+		$value = $explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)->value;
 
 		return $value !== null ? $this->class::from($value) : null;
 	}

@@ -29,8 +29,8 @@ final readonly class EntityCodec implements Codec
 
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?Entity
 	{
-		$value = $explorer[$metadata->index]->value;
+		$explorer = $explorer->withNamespace($metadata->namespace)->withIndex($metadata->index);
 
-		return $value !== null ? $this->class::fromExplorer($explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)) : null;
+		return $explorer->value !== null ? $this->class::fromExplorer($explorer) : null;
 	}
 }

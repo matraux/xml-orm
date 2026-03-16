@@ -22,7 +22,7 @@ final readonly class BoolCodec implements Codec
 
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?bool
 	{
-		$value = $explorer[$metadata->index]->value;
+		$value = $explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)->value;
 
 		return filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
 	}

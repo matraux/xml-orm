@@ -22,7 +22,7 @@ final readonly class IntCodec implements Codec
 
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?int
 	{
-		$value = $explorer[$metadata->index]->value;
+		$value = $explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)->value;
 
 		return filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 	}

@@ -34,8 +34,8 @@ final readonly class CollectionCodec implements Codec
 	 */
 	public function decode(Explorer $explorer, PropertyMetadata $metadata): ?Collection
 	{
-		$value = $explorer[$metadata->index]->value;
+		$explorer = $explorer->withNamespace($metadata->namespace)->withIndex($metadata->index);
 
-		return $value !== null ? $this->class::fromExplorer($explorer->withNamespace($metadata->namespace)->withIndex($metadata->index)) : null;
+		return $explorer->value !== null ? $this->class::fromExplorer($explorer) : null;
 	}
 }
