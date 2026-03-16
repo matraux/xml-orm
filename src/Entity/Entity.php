@@ -59,7 +59,7 @@ abstract class Entity implements Stringable
 		}
 
 		$xmlns = $entityMetadata->namespace;
-		$name = $xmlns ? $xmlns::getName() . ':' . $entityMetadata->name : $entityMetadata->name;
+		$name = $xmlns ? $xmlns->getName() . ':' . $entityMetadata->name : $entityMetadata->name;
 
 		$element = $owner->createElement($name);
 		$document->appendChild($element);
@@ -69,7 +69,7 @@ abstract class Entity implements Stringable
 				throw new RuntimeException('Invalid DOM document element.');
 			}
 
-			$owner->documentElement->setAttribute('xmlns:' . $xmlns::getName(), $xmlns::getSource());
+			$owner->documentElement->setAttribute('xmlns:' . $xmlns->getName(), $xmlns->getSource());
 		}
 
 		foreach ($entityMetadata->properties as $property) {
@@ -96,8 +96,8 @@ abstract class Entity implements Stringable
 				$name = $property->index;
 
 				if ($xmlns = $property->namespace) {
-					$name = $xmlns::getName() . ':' . $name;
-					$owner->documentElement?->setAttribute('xmlns:' . $xmlns::getName(), $xmlns::getSource());
+					$name = $xmlns->getName() . ':' . $name;
+					$owner->documentElement?->setAttribute('xmlns:' . $xmlns->getName(), $xmlns->getSource());
 				}
 
 				$elementProperty = $owner->createElement($name, (string) $value);

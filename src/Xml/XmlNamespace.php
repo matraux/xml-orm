@@ -6,7 +6,7 @@ abstract class XmlNamespace
 {
 	final public function __construct() {}
 
-	abstract public static function getName(): string;
+	abstract public function getName(): string;
 
-	abstract public static function getSource(): string;
+	abstract public function getSource(): string;
 }
