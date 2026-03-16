@@ -42,8 +42,8 @@ composer require matraux/xml-orm
 | version | PHP | Note |
 |---|---|---|
 | 1.0.0 | 7.4+ | Support PHP 7.4 |
-| 1.0.0 | 8.3+ | Support PHP 8.3 |
-| 1.0.0 | 8.4+ | Support PHP 8.4 |
+| 2.0.0 | 8.3+ | Support PHP 8.3 |
+| 3.0.0 | 8.4+ | Support PHP 8.4 |
 
 <br>
 
