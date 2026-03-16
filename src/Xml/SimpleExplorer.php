@@ -22,9 +22,10 @@ final class SimpleExplorer extends Explorer
 	public static function fromFile(string $file): static
 	{
 		libxml_clear_errors();
-		libxml_use_internal_errors(true);
+		$internal = libxml_use_internal_errors(true);
 		$xml = simplexml_load_file($file);
 		$error = libxml_get_last_error();
+		libxml_use_internal_errors($internal);
 
 		if ($xml === false || $error !== false) {
 			throw new XmlParsingException(sprintf('Invalid XML: %s', $error->message ?? 'Unknown error'));
@@ -36,9 +37,10 @@ final class SimpleExplorer extends Explorer
 	public static function fromString(string $data): static
 	{
 		libxml_clear_errors();
-		libxml_use_internal_errors(true);
+		$internal = libxml_use_internal_errors(true);
 		$xml = simplexml_load_string($data);
 		$error = libxml_get_last_error();
+		libxml_use_internal_errors($internal);
 
 		if ($xml === false || $error !== false) {
 			throw new XmlParsingException(sprintf('Invalid XML: %s', $error->message ?? 'Unknown error'));
