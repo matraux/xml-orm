@@ -52,7 +52,7 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\XmlORM\Xml\SimpleExplorer;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
 
 $explorer = SimpleExplorer::fromString($xml);
 $main = MainEntity::fromExplorer($explorer);
@@ -62,8 +62,7 @@ echo $main->name;
 See [Write](./docs/Write.md) for writing examples.
 ```php
 $main = MainEntity::create();
-$main->id = 1000;
-$main->name = 'Maim entity';
+$main->name = 'Main entity';
 
 echo $main;
 ```
