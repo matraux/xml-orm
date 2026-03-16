@@ -3,11 +3,12 @@
 namespace Matraux\XmlOrm\Test;
 
 use Codeception\Configuration;
+use DateTime;
 use Matraux\XmlOrm\Xml\Explorer;
 use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
 use Matraux\XmlOrm\Test\Dto\Entity\DataEntity;
-use Matraux\XmlOrm\Test\Dto\Entity\Enum\Active;
+use Matraux\XmlOrm\Test\Dto\Enum\Active;
 use Matraux\XmlOrm\Test\Dto\Entity\MainEntity;
 use Matraux\XmlOrm\Test\Dto\Entity\ResponseEntity;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
@@ -31,6 +32,8 @@ final class EntityCest
 		$tester->assertInstanceOf(ItemCollection::class, $entity->main->items);
 		$tester->assertEquals(Active::False, $entity->main->items[0]->active);
 		$tester->assertEquals(Active::True, $entity->main->items[2]->active);
+		$tester->assertEquals(new DateTime('16.03.2026 00:00:01'), $entity->main->items[0]->created);
+		$tester->assertEquals(new DateTime('16.03.2026 00:00:03'), $entity->main->items[2]->created);
 		$tester->assertEquals('Some custom name', $entity->main->name);
 		$tester->assertEquals('Some custom surname', $entity->main->surname);
 		$tester->assertEquals('Custom note', $entity->main->note);

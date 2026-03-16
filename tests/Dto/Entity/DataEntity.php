@@ -3,8 +3,8 @@
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
 use Matraux\XmlOrm\Entity\Entity;
-use Matraux\XmlOrm\Xml\XmlElement;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Xml\XmlElement;
 
 #[GeneralXmlNamespace]
 #[XmlElement('data')]
