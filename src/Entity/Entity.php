@@ -5,7 +5,7 @@ namespace Matraux\XmlOrm\Entity;
 use DOMDocument;
 use DOMNode;
 use Matraux\XmlOrm\Collection\Collection;
-use Matraux\XmlOrm\Metadata\EntityMetadataFactory;
+use Matraux\XmlOrm\Metadata\MetadataFactory;
 use Matraux\XmlOrm\Xml\Explorer;
 use ReflectionClass;
 use RuntimeException;
@@ -20,7 +20,7 @@ abstract class Entity implements Stringable
 	final public static function fromExplorer(Explorer $explorer): static
 	{
 		return new ReflectionClass(static::class)->newLazyGhost(function (self $entity) use ($explorer): void {
-			$entityMetadata = EntityMetadataFactory::create(static::class);
+			$entityMetadata = MetadataFactory::create(static::class);
 			foreach ($entityMetadata->properties as $property) {
 				if ($property->attribute) {
 					$entity->{$property->name} = $explorer->attribute($property->attribute);
@@ -51,7 +51,7 @@ abstract class Entity implements Stringable
 	{
 		$document ??= new DOMDocument('1.0', static::Encoding);
 
-		$entityMetadata = EntityMetadataFactory::create(static::class);
+		$entityMetadata = MetadataFactory::create(static::class);
 
 		$owner = $document instanceof DOMDocument ? $document : $document->ownerDocument;
 		if (!$owner) {

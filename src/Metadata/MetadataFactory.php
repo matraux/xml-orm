@@ -5,7 +5,7 @@ namespace Matraux\XmlOrm\Metadata;
 use Matraux\XmlOrm\Entity\Entity;
 use ReflectionClass;
 
-final class EntityMetadataFactory
+final class MetadataFactory
 {
 	/** @var array<class-string<Entity>,EntityMetadata> */
 	protected static array $cache;

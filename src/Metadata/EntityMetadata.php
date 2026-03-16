@@ -7,6 +7,7 @@ use Matraux\XmlOrm\Xml\XmlElement;
 use Matraux\XmlOrm\Xml\XmlNamespace;
 use ReflectionAttribute;
 use ReflectionClass;
+use RuntimeException;
 
 final readonly class EntityMetadata
 {
@@ -20,16 +21,13 @@ final readonly class EntityMetadata
 	/**
 	 * @param ReflectionClass<Entity> $reflection
 	 */
-	public function __construct(ReflectionClass $reflection)
+	public function __construct(protected ReflectionClass $reflection)
 	{
-		$attributes = $reflection->getAttributes(XmlElement::class, ReflectionAttribute::IS_INSTANCEOF);
-		$this->name = array_shift($attributes)?->newInstance()->name ?? $reflection->name;
-
-		$attributes = $reflection->getAttributes(XmlNamespace::class, ReflectionAttribute::IS_INSTANCEOF);
-		$this->namespace = array_shift($attributes)?->newInstance();
+		$this->name = $this->resolveAttribute(XmlElement::class)->name ?? $this->reflection->name;
+		$this->namespace = $this->resolveAttribute(XmlNamespace::class);
 
 		$properties = [];
-		foreach ($reflection->getProperties() as $property) {
+		foreach ($this->reflection->getProperties() as $property) {
 			$properties[] = new ReflectionClass(PropertyMetadata::class)
 				->newLazyGhost(function (PropertyMetadata $propertyMetadata) use ($property): void {
 					$propertyMetadata->__construct($property);
@@ -38,4 +36,20 @@ final readonly class EntityMetadata
 
 		$this->properties = $properties;
 	}
+
+	/**
+	 * @template T of object
+	 * @param class-string<T> $class
+	 * @return null|T
+	 */
+	protected function resolveAttribute(string $class): ?object
+	{
+		$attributes = $this->reflection->getAttributes($class, ReflectionAttribute::IS_INSTANCEOF);
+		if (count($attributes) > 1) {
+			throw new RuntimeException(sprintf('%s expects single %s attribute, multiple given.', $this->reflection->class, $class));
+		}
+
+		return array_shift($attributes)?->newInstance();
+	}
+
 }
