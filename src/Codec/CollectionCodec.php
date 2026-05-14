@@ -2,9 +2,9 @@
 
 namespace Matraux\XmlOrm\Codec;
 
-use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Collection\Collection;
 use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Metadata\PropertyMetadata;
 use Matraux\XmlOrm\Xml\Explorer;
 

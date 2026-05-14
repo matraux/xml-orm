@@ -4,15 +4,15 @@ namespace Matraux\XmlOrm\Test;
 
 use Codeception\Configuration;
 use DateTime;
-use Matraux\XmlOrm\Xml\Explorer;
-use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
 use Matraux\XmlOrm\Test\Dto\Entity\DataEntity;
-use Matraux\XmlOrm\Test\Dto\Enum\Active;
 use Matraux\XmlOrm\Test\Dto\Entity\MainEntity;
 use Matraux\XmlOrm\Test\Dto\Entity\ResponseEntity;
+use Matraux\XmlOrm\Test\Dto\Enum\Active;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 use Matraux\XmlOrm\Test\Support\UnitTester;
+use Matraux\XmlOrm\Xml\Explorer;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
 
 final class EntityCest
 {
@@ -56,13 +56,11 @@ final class EntityCest
 		$item->id = 2;
 		$item->created = new DateTime('16.03.2026 00:00:02');
 
-
 		$tester->assertStringEqualsFile(Configuration::dataDir() . 'match.xml', (string) $response);
 	}
 
 	protected static function createExplorer(): Explorer
 	{
-
 		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.xml')
 			->withNamespace(new GeneralXmlNamespace())
 			->withIndex('data');

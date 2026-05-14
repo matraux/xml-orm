@@ -3,10 +3,10 @@
 namespace Matraux\XmlOrm\Test\Dto\Entity;
 
 use Matraux\XmlOrm\Entity\Entity;
-use Matraux\XmlOrm\Xml\XmlAttribute;
-use Matraux\XmlOrm\Xml\XmlElement;
 use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
+use Matraux\XmlOrm\Xml\XmlAttribute;
+use Matraux\XmlOrm\Xml\XmlElement;
 
 #[GeneralXmlNamespace]
 #[XmlElement('main')]

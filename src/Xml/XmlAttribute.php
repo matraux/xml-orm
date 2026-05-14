@@ -8,5 +8,4 @@ use Attribute;
 final readonly class XmlAttribute
 {
 	public function __construct(public string $name) {}
-
 }

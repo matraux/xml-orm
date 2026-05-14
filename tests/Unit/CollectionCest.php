@@ -3,12 +3,12 @@
 namespace Matraux\XmlOrm\Test;
 
 use Codeception\Configuration;
-use Matraux\XmlOrm\Xml\Explorer;
-use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Collection\ItemCollection;
 use Matraux\XmlOrm\Test\Dto\Entity\ItemEntity;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 use Matraux\XmlOrm\Test\Support\UnitTester;
+use Matraux\XmlOrm\Xml\Explorer;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
 use OutOfRangeException;
 use UnexpectedValueException;
 

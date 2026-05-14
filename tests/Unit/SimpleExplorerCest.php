@@ -4,10 +4,10 @@ namespace Matraux\XmlOrm\Test\Unit;
 
 use Codeception\Configuration;
 use Matraux\XmlOrm\Exception\XmlParsingException;
-use Matraux\XmlOrm\Xml\Explorer;
-use Matraux\XmlOrm\Xml\SimpleExplorer;
 use Matraux\XmlOrm\Test\Dto\Xml\GeneralXmlNamespace;
 use Matraux\XmlOrm\Test\Support\UnitTester;
+use Matraux\XmlOrm\Xml\Explorer;
+use Matraux\XmlOrm\Xml\SimpleExplorer;
 use OutOfRangeException;
 use UnexpectedValueException;
 

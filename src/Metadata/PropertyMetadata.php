@@ -3,7 +3,6 @@
 namespace Matraux\XmlOrm\Metadata;
 
 use BackedEnum;
-use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Codec\BackedEnumCodec;
 use Matraux\XmlOrm\Codec\BoolCodec;
 use Matraux\XmlOrm\Codec\Codec;
@@ -13,6 +12,7 @@ use Matraux\XmlOrm\Codec\FloatCodec;
 use Matraux\XmlOrm\Codec\IntCodec;
 use Matraux\XmlOrm\Collection\Collection;
 use Matraux\XmlOrm\Entity\Entity;
+use Matraux\XmlOrm\Exception\CodecException;
 use Matraux\XmlOrm\Xml\XmlAttribute;
 use Matraux\XmlOrm\Xml\XmlElement;
 use Matraux\XmlOrm\Xml\XmlNamespace;
