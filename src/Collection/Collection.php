@@ -15,6 +15,7 @@ use UnexpectedValueException;
 
 /**
  * @template TEntity of Entity
+ *
  * @implements IteratorAggregate<int,TEntity>
  * @implements ArrayAccess<int,TEntity>
  */

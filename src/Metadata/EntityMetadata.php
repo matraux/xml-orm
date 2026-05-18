@@ -39,7 +39,9 @@ final readonly class EntityMetadata
 
 	/**
 	 * @template T of object
+	 *
 	 * @param class-string<T> $class
+	 *
 	 * @return null|T
 	 */
 	protected function resolveAttribute(string $class): ?object
