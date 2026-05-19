@@ -2,10 +2,30 @@ name: Quality Assurance
 
 on:
   push:
-    branches:
-      - master
+
+env:
+  PHP_VERSION: '8.4'
 
 jobs:
+  codecheck:
+    name: Coding Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer
+
+      - name: Run Composer
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Run code style check
+        run: composer cs:check
+
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
@@ -16,7 +36,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
 
       - name: Run Composer
@@ -38,7 +58,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
 
       - name: Run Composer
